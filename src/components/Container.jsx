@@ -3,10 +3,10 @@ import {
   Switch, Route, withRouter, Redirect,
 } from 'react-router-dom';
 
-import Landing from './Landing';
-import Login from './Login';
-import CreateMixtapes from './CreateMixtapes';
-import MixtapePlayer from './MixtapePlayer';
+// import Landing from './Landing';
+import Login from './Login.jsx';
+import CreateMixtapes from './CreateMixtapes.jsx';
+import MixtapePlayer from './MixtapePlayer.jsx';
 
 /** Container component handles the front-end routing/rendering of the app and renders the Login,
  * CreateMixtapes, and MixtapePlayer components at their respective routes. Container is a child
