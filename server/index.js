@@ -5,16 +5,16 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
-const db = require('../database/index.js');
+const db = require('../database/index');
 
 /**
- * express required to aid in in handeling request made to server
+ * express required to aid in in handling request made to server
  * session required to aid with passport request for google authentication
  * path required to aid in redirects to avoid landing on incorrect endpoint
  * axios required to send requests
  * bodyParse required to retrieve information from body while avoiding chunks
  * passport required in retrieving info from google authentication
- * GoogleStrategy required to retireve user's google infromation to store users
+ * GoogleStrategy required to retrieve user's google information to store users
  * db required as a path to our database commands
  */
 

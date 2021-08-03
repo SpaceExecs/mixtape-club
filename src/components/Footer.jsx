@@ -4,10 +4,8 @@ import React from 'react';
  * and is a child component of Login.
  */
 
-const Footer = () => {
-    return (
-        <footer className="text-info">Created with love by Operation Sparkle.</footer>
-    )
-}
+const Footer = () => (
+  <footer className="text-info">Created with love by Operation Sparkle.</footer>
+);
 
 export default Footer;
