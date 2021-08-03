@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /** Search component renders a search text input and button to search for songs to add to mixtapes
  * at the create-mixtapes route and is a child component of CreateMixtapes.
@@ -10,7 +10,7 @@ const Search = (props) => {
     <div className="navbar navbar-light rounded-lg search d-flex justify-content-md-end">
       <input
         onChange={onChange}
-        style={{ maxWidth: '73%' }}
+        style={{ maxWidth: "73%" }}
         className="form-control mr-sm-2 col-9"
         type="text"
         placeholder="Search"
@@ -18,7 +18,7 @@ const Search = (props) => {
       />
       <button
         className="btn btn-light border border-info my-2 my-sm-0 col-3"
-        style={{ color: '#17a2b8' }}
+        style={{ color: "#17a2b8" }}
         type="submit"
         onClick={onSearch}
       >

@@ -1,8 +1,8 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
-import SearchListItem from './SearchListItem.jsx';
+import SearchListItem from "./SearchListItem.jsx";
 
 /** SearchList component renders list of searched songs at the create-mixtapes route
  * and is a child component of CreateMixtapes.
