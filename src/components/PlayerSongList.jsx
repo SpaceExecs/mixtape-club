@@ -65,9 +65,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === aSideLinks[0]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === aSideLinks[0] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {aSideTitles[0]}{" "}
@@ -75,9 +75,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === aSideLinks[1]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === aSideLinks[1] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {aSideTitles[1]}{" "}
@@ -85,9 +85,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === aSideLinks[2]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === aSideLinks[2] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {aSideTitles[2]}{" "}
@@ -95,9 +95,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === aSideLinks[3]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === aSideLinks[3] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {aSideTitles[3]}{" "}
@@ -105,9 +105,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === aSideLinks[4]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === aSideLinks[4] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {aSideTitles[4]}{" "}
@@ -124,9 +124,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === bSideLinks[0]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === bSideLinks[0] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[0]}
@@ -134,9 +134,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === bSideLinks[1]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === bSideLinks[1] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[1]}
@@ -144,9 +144,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === bSideLinks[2]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === bSideLinks[2] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[2]}
@@ -154,9 +154,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === bSideLinks[3]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === bSideLinks[3] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[3]}
@@ -164,9 +164,9 @@ const PlayerSongList = (props) => {
                 <li
                   className="list-group-item track-li"
                   style={
-                    currentSong === bSideLinks[4]
-                      ? { backgroundColor: "#a7dae7" }
-                      : { backgroundColor: "#fff" }
+                    currentSong === bSideLinks[4] ?
+                      { backgroundColor: "#a7dae7" } :
+                      { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[4]}
@@ -184,7 +184,7 @@ const PlayerSongList = (props) => {
           </button>
           Share Mixtape
           <div
-            class="fb-share-button"
+            className="fb-share-button"
             data-href="http://localhost:3000"
             data-layout="button"
             data-size="large"
@@ -192,7 +192,7 @@ const PlayerSongList = (props) => {
             <a
               target="_blank"
               href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2F&amp;src=sdkpreparse"
-              class="fb-xfbml-parse-ignore"
+              className="fb-xfbml-parse-ignore" rel="noreferrer"
             >
               Share
             </a>
@@ -200,7 +200,7 @@ const PlayerSongList = (props) => {
           <br />
           <a
             href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-            class="twitter-share-button"
+            className="twitter-share-button"
             data-size="large"
             data-text="Check out this mixtape I made with Mixtape Club!"
             data-show-count="false"

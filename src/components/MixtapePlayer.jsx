@@ -12,6 +12,7 @@ import { library, config } from "@fortawesome/fontawesome-svg-core";
 
 import axios from "axios";
 import UserMixtapesList from "./UserMixtapes.jsx";
+import SamplePlaylist from "./SamplePlaylist.jsx";
 import PlayerSongList from "./PlayerSongList.jsx";
 import TapeCoverImage from "./TapeCoverImage.jsx";
 
@@ -46,6 +47,7 @@ class MixtapePlayer extends React.Component {
     };
 
     this.getUserPlaylists();
+    // this.getSuggestedPlaylists();
     this.onReady = this.onReady.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
@@ -85,6 +87,54 @@ class MixtapePlayer extends React.Component {
 
     axios
       .get("/userPlaylists", {
+        googleId,
+      })
+      .then((response) => {
+        const { data } = response;
+
+        const aVideoArray = [];
+        const bVideoArray = [];
+        const aTitleArray = [];
+        const bTitleArray = [];
+        const aSide = JSON.parse(data.response[0].aSideLinks);
+        const bSide = JSON.parse(data.response[0].bSideLinks);
+        this.setState({
+          userPlaylists: data.response,
+          userName: data.displayName,
+        });
+        if (!this.state.currentPlaylistId) {
+          aSide.forEach((video) => {
+            aVideoArray.push(video.id.videoId);
+            aTitleArray.push(video.snippet.title);
+          });
+          bSide.forEach((video) => {
+            bVideoArray.push(video.id.videoId);
+            bTitleArray.push(video.snippet.title);
+          });
+          this.setState({
+            currentPlaylistId: data.response[0]._id,
+            aSideLinks: aVideoArray,
+            bSideLinks: bVideoArray,
+            aSideTitles: aTitleArray,
+            bSideTitles: bTitleArray,
+            tapeCover: data.response[0].tapeDeck,
+            sidePlaying: aVideoArray,
+            tapeTitle: data.response[0].tapeLabel,
+          });
+          this.state.player.loadPlaylist({ playlist: this.state.sidePlaying });
+        }
+      })
+      .catch((err) => {
+        console.error("Error searching:", err);
+      });
+  }
+
+
+  getSuggestedPlaylists() {
+    const { googleId } = this.state;
+
+    axios
+      .get("/suggestedPlaylists", {
         googleId,
       })
       .then((response) => {
@@ -364,6 +414,7 @@ class MixtapePlayer extends React.Component {
       bSideTitles,
       tapeCover,
       userPlaylists,
+      suggestedPlaylists,
       tapeTitle,
       currentSong,
       userName,
@@ -431,7 +482,12 @@ class MixtapePlayer extends React.Component {
           userName={userName}
           tapeRefresh={this.tapeRefresh}
         />
+        <br />
+        <SamplePlaylist
+          // suggtestedPlaylists={suggtestedPlaylists}
+        />
       </div>
+
     );
   }
 }
