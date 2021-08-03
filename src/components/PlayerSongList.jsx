@@ -183,11 +183,11 @@ const PlayerSongList = (props) => {
             Flip Tape
           </button>
           Share Mixtape
-          <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
+          <div class="fb-share-button" data-href="http://localhost:3000" data-layout="button" data-size="large"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3000%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
             <br/>
             <a
               class='twitter-share-button'
-              href='https://twitter.com/intent/tweet?text=Hello%20world'
+              href='https://twitter.com/intent/tweet'
               data-size='large'
             >
               Tweet
