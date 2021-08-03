@@ -15,11 +15,13 @@ const fetchLyrics = (title, artist) => {
   };
 
   getLyrics(options)
-    .then(lyrics =>
-      // console.log('FROM WITHIN getLyrics', lyrics);
-      lyrics)
+    .then((lyrics) => {
+      console.log('FROM WITHIN getLyrics', lyrics);
+      return lyrics;
+    })
     .catch(err => console.log(err));
 };
+
 
 const fetchSongDetails = (title, artist) => {
   const options = {
@@ -35,3 +37,5 @@ const fetchSongDetails = (title, artist) => {
   ${song.albumArt}
   ${song.lyrics}`));
 };
+
+module.exports = { fetchLyrics, fetchSongDetails };
