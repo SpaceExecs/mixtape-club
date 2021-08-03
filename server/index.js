@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const db = require("../database/index");
+const { lyricRoutes } = require("./routes/lyricRoutes");
 
 /**
  * express required to aid in in handling request made to server
@@ -299,6 +300,8 @@ app.post("/search", (req, res) => {
       res.send(err);
     });
 });
+
+app.use('/', lyricRoutes);
 
 const PORT = 3000;
 

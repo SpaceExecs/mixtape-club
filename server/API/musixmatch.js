@@ -15,10 +15,10 @@ axios.get(request)
   console.log(!!track.explicit)
   return !!track.explicit
 })
-.catch((err) => console.log(err))
+.catch((err) => console.log(err));
 }
 
-explicitSearch('Power', 'Kanye West')
+// explicitSearch('Power', 'Kanye West');
 
 // export default explicitSearch;
 module.exports = { explicitSearch };
