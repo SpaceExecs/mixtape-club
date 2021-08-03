@@ -362,7 +362,17 @@ class MixtapePlayer extends React.Component {
 
   render() {
     const {
-      aSideLinks, bSideLinks, aSideTitles, bSideTitles, tapeCover, userPlaylists, tapeTitle, currentSong, userName, currentPlaylistId, toggleLink,
+      aSideLinks,
+      bSideLinks,
+      aSideTitles,
+      bSideTitles,
+      tapeCover,
+      userPlaylists,
+      tapeTitle,
+      currentSong,
+      userName,
+      currentPlaylistId,
+      toggleLink,
     } = this.state;
 
     return (
