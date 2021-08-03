@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const autoIncrement = require('mongoose-auto-increment');
-const findOrCreate = require('mongoose-findorcreate');
+const mongoose = require("mongoose");
+const autoIncrement = require("mongoose-auto-increment");
+const findOrCreate = require("mongoose-findorcreate");
 
 /**
  * Mongoose required to connect to db as well as organize schema
@@ -12,16 +12,16 @@ const findOrCreate = require('mongoose-findorcreate');
  * Connection made using mongoose to connect to mongoDB stored on local machine
  */
 
-mongoose.connect('mongodb://localhost/mtc', { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/mtc", { useNewUrlParser: true });
 
 /**
  *Renaming connection to save time on calls to database
  */
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-  console.log('MongoDB Connected');
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+  console.log("MongoDB Connected");
 });
 
 /**
@@ -47,8 +47,8 @@ const playlistSchema = new mongoose.Schema({
   tapeLabel: String,
 });
 playlistSchema.plugin(findOrCreate);
-playlistSchema.plugin(autoIncrement.plugin, 'playlist');
-const Playlist = mongoose.model('Playlist', playlistSchema);
+playlistSchema.plugin(autoIncrement.plugin, "playlist");
+const Playlist = mongoose.model("Playlist", playlistSchema);
 
 /**
  * Schema for user created using mongoose
@@ -62,7 +62,7 @@ const userSchema = new mongoose.Schema({
   displayName: String,
 });
 userSchema.plugin(findOrCreate);
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 
 /**
  * findCreate uses the findOrCreate plugin to check if document is created
@@ -100,7 +100,13 @@ const storePlaylist = (plDetails, callback) => {
   // plDetails is an object with all of our columns needing to be saved
   // when sending in request, please be sure  to include all fields, all are stings.
   const {
-    userId, aSideLinks, bSideLinks, aTitles, bTitles, tapeDeck, tapeLabel,
+    userId,
+    aSideLinks,
+    bSideLinks,
+    aTitles,
+    bTitles,
+    tapeDeck,
+    tapeLabel,
   } = plDetails;
   const playlistInfo = new Playlist({
     userId,
@@ -115,7 +121,7 @@ const storePlaylist = (plDetails, callback) => {
     if (err) {
       callback(err);
     } else {
-      callback('Success');
+      callback("Success");
     }
   });
 };
@@ -146,10 +152,10 @@ const retrievePlaylist = (filter, callback) => {
 const getAllPlaylists = (filter, callback) => {
   Playlist.find(filter, (err, data) => {
     if (err) {
-      console.log('error', err);
+      console.log("error", err);
       callback(err);
     } else {
-      console.log('data', data);
+      console.log("data", data);
       callback(null, data);
     }
   });
@@ -171,7 +177,6 @@ const updatePlaylist = async function (filter, update, callback) {
   const data = await Playlist.findOneAndUpdate(filter, update, { new: true });
   callback(data);
 };
-
 
 module.exports.findCreate = findCreate;
 module.exports.Playlist = Playlist;

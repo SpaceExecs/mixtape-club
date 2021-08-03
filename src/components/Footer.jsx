@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /** Footer component renders created by message at the login route
  * and is a child component of Login.
