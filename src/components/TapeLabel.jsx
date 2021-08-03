@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /** TapeLabel component renders a label/title for the mixtape created by the currently logged in user
  * at the create-mixtape route and is a child component of the PlaylistImageSelector component

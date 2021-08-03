@@ -1,25 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import YouTube from 'react-youtube';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import ReactDOM from "react-dom";
+import YouTube from "react-youtube";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPlay, faPause, faForward, faBackward,
-} from '@fortawesome/free-solid-svg-icons';
-import { library, config } from '@fortawesome/fontawesome-svg-core';
+  faPlay,
+  faPause,
+  faForward,
+  faBackward,
+} from "@fortawesome/free-solid-svg-icons";
+import { library, config } from "@fortawesome/fontawesome-svg-core";
 
-import axios from 'axios';
-import { basename } from 'path';
-import UserMixtapesList from './UserMixtapes.jsx';
-import PlayerSongList from './PlayerSongList.jsx';
-import TapeCoverImage from './TapeCoverImage.jsx';
+import axios from "axios";
+import UserMixtapesList from "./UserMixtapes.jsx";
+import PlayerSongList from "./PlayerSongList.jsx";
+import TapeCoverImage from "./TapeCoverImage.jsx";
 
-import LisaFrankenstein from '../assets/img/tapes/lisa-frankenstein-tape.gif';
+import LisaFrankenstein from "../assets/img/tapes/lisa-frankenstein-tape.gif";
 
 /** MixtapePlayer component is stateful and renders the entire mixtape-player route with it's child
  * componenets. It is a child component of Container.  Mixtape player also stores information about a
  * logged in user's playlists so that they can be rendered and played.
  */
-
 
 class MixtapePlayer extends React.Component {
   constructor(props) {
@@ -27,20 +28,20 @@ class MixtapePlayer extends React.Component {
     this.state = {
       player: null,
       playing: false,
-      aSideLinks: ['fi33-cITS0s'],
-      bSideLinks: ['H1Zm6E6Sy4Y'],
+      aSideLinks: ["fi33-cITS0s"],
+      bSideLinks: ["H1Zm6E6Sy4Y"],
       interval: null,
       playListId: null || this.props.location,
-      aSideTitles: ['Login to start making mixtapes of your own!'],
-      bSideTitles: ['Login to start making mixtapes of your own!'],
+      aSideTitles: ["Login to start making mixtapes of your own!"],
+      bSideTitles: ["Login to start making mixtapes of your own!"],
       tapeCover: LisaFrankenstein,
-      sidePlaying: ['fi33-cITS0s'],
+      sidePlaying: ["fi33-cITS0s"],
       googleId: null || this.props.googleId,
       userPlaylists: [],
-      tapeTitle: 'Operation Sparkle',
-      currentSong: '',
-      userName: '',
-      currentPlaylistId: '',
+      tapeTitle: "Operation Sparkle",
+      currentSong: "",
+      userName: "",
+      currentPlaylistId: "",
       toggleLink: false,
     };
 
@@ -58,11 +59,11 @@ class MixtapePlayer extends React.Component {
     this.onToggleShareLink = this.onToggleShareLink.bind(this);
 
     this.divStyle = {
-      borderRadius: '5px',
-      marginTop: '-360px',
+      borderRadius: "5px",
+      marginTop: "-360px",
     };
     this.iconStyle = {
-      margin: '3% 0',
+      margin: "3% 0",
     };
   }
 
@@ -74,17 +75,18 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
- * Function makes get request to the server, which then retrieves
- * the users playlists from the database based on their googleId.
- * When retrieved the userPlaylists and userName are stored on the
- * state of the component.
- */
+   * Function makes get request to the server, which then retrieves
+   * the users playlists from the database based on their googleId.
+   * When retrieved the userPlaylists and userName are stored on the
+   * state of the component.
+   */
   getUserPlaylists() {
     const { googleId } = this.state;
 
-    axios.get('/userPlaylists', {
-      googleId,
-    })
+    axios
+      .get("/userPlaylists", {
+        googleId,
+      })
       .then((response) => {
         const { data } = response;
 
@@ -121,14 +123,14 @@ class MixtapePlayer extends React.Component {
         }
       })
       .catch((err) => {
-        console.error('Error searching:', err);
+        console.error("Error searching:", err);
       });
   }
 
   /**
-     * Function retrieves the shared playlist from the database by querying
-     * using the playlistId. The playlist is then loaded into the mixtapePlayer.
-     */
+   * Function retrieves the shared playlist from the database by querying
+   * using the playlistId. The playlist is then loaded into the mixtapePlayer.
+   */
   loadShared() {
     const aVideoArray = [];
     const bVideoArray = [];
@@ -142,14 +144,13 @@ class MixtapePlayer extends React.Component {
       });
 
       const id = search.slice(4);
-      axios.post('/mixtape-player', {
-        id,
-      })
+      axios
+        .post("/mixtape-player", {
+          id,
+        })
         .then((response) => {
           if (response.data.bSide) {
-            const {
-              aSide, bSide, tapeDeck, tapeLabel, userId,
-            } = response.data;
+            const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
               aTitleArray.push(video.snippet.title);
@@ -168,9 +169,7 @@ class MixtapePlayer extends React.Component {
               tapeTitle: tapeLabel,
             });
           } else {
-            const {
-              aSide, tapeDeck, tapeLabel, userId,
-            } = response.data;
+            const { aSide, tapeDeck, tapeLabel, userId } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
               aTitleArray.push(video.snippet.title);
@@ -192,10 +191,10 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function listens for the youTube player to be fully loaded, then loads
-     * the playlist into the player using the built-in YouTube Player API function
-     * loadPlaylist. The video starts once the playlist loads.
-     */
+   * Function listens for the youTube player to be fully loaded, then loads
+   * the playlist into the player using the built-in YouTube Player API function
+   * loadPlaylist. The video starts once the playlist loads.
+   */
   onReady(event) {
     this.setState({
       player: event.target,
@@ -204,9 +203,9 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     *  Function triggered by the play button to change the state of the player to playing.
-     *  The playVideo function is a built-in function of the YouTube Player API.
-     */
+   *  Function triggered by the play button to change the state of the player to playing.
+   *  The playVideo function is a built-in function of the YouTube Player API.
+   */
   onPlayVideo() {
     this.state.player.playVideo();
     this.setState({
@@ -215,9 +214,9 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function triggered by the pause button that calls the built-in player pause function and
-     * sets the state of playing to false.
-     */
+   * Function triggered by the pause button that calls the built-in player pause function and
+   * sets the state of playing to false.
+   */
   onPauseVideo() {
     this.state.player.pauseVideo();
     this.setState({
@@ -226,28 +225,28 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function triggered by the fast-forward button. Mimics fast-forward by changing the playback
-     * rate and lowering the volume while the button is held-down.
-     */
+   * Function triggered by the fast-forward button. Mimics fast-forward by changing the playback
+   * rate and lowering the volume while the button is held-down.
+   */
   onForward() {
     this.state.player.setPlaybackRate(2);
     this.state.player.setVolume(50);
   }
 
   /**
-     * Function that restores the volume and speed of the player when the fast-forward
-     * button is released.
-     */
+   * Function that restores the volume and speed of the player when the fast-forward
+   * button is released.
+   */
   onStopForward() {
     this.state.player.setPlaybackRate(1.0);
     this.state.player.setVolume(100);
   }
 
   /**
-     * Function triggered by the rewind button mouseDown event that mimics rewind functionality.
-     * When the button is held-down the function retrieves the current time of the video then
-     * subtracts from that value to seek backwards on the player on an interval.
-     */
+   * Function triggered by the rewind button mouseDown event that mimics rewind functionality.
+   * When the button is held-down the function retrieves the current time of the video then
+   * subtracts from that value to seek backwards on the player on an interval.
+   */
   onBackward() {
     let time = this.state.player.getCurrentTime();
     this.state.player.setVolume(50);
@@ -258,9 +257,9 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function triggered by the mouseUp event of the rewind button that clears the interval, triggers
-     * the video to play again, and restores the volume of the player.
-     */
+   * Function triggered by the mouseUp event of the rewind button that clears the interval, triggers
+   * the video to play again, and restores the volume of the player.
+   */
   onStopBackward() {
     clearInterval(this.state.interval);
     this.state.player.playVideo();
@@ -268,15 +267,15 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function called any time the state of the player changes to "1", which is the
-     * event code for "playing" for the YouTube API player. The function retrieves
-     * the url from the current song, then extracts the videoId and assigns it to the state
-     * as urlId so that the currently playing song will be highlighted in the list of songs.
-     */
+   * Function called any time the state of the player changes to "1", which is the
+   * event code for "playing" for the YouTube API player. The function retrieves
+   * the url from the current song, then extracts the videoId and assigns it to the state
+   * as urlId so that the currently playing song will be highlighted in the list of songs.
+   */
   checkVid(event) {
     if (event.data === 1) {
       let urlId = this.state.player.getVideoUrl();
-      urlId = urlId.replace('https://www.youtube.com/watch?v=', '');
+      urlId = urlId.replace("https://www.youtube.com/watch?v=", "");
 
       if (this.state.currentSong !== urlId) {
         this.setState({
@@ -287,16 +286,11 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function triggered by the flip tape button that loads the opposite side of the
-     * tape's list of songs into the YouTube Player API.
-     */
+   * Function triggered by the flip tape button that loads the opposite side of the
+   * tape's list of songs into the YouTube Player API.
+   */
   onFlip() {
-    const {
-      sidePlaying,
-      aSideLinks,
-      bSideLinks,
-      player,
-    } = this.state;
+    const { sidePlaying, aSideLinks, bSideLinks, player } = this.state;
     if (sidePlaying[0] === aSideLinks[0]) {
       const sideB = bSideLinks;
       this.setState({
@@ -313,14 +307,17 @@ class MixtapePlayer extends React.Component {
   }
 
   /**
-     * Function called to switch between playlists. Retrieves the playlist by
-     * matching the id of the clicked element and the id of the playlist.
-     */
+   * Function called to switch between playlists. Retrieves the playlist by
+   * matching the id of the clicked element and the id of the playlist.
+   */
   tapeRefresh(event) {
     // location.reload()
 
     this.state.userPlaylists.forEach((playlist) => {
-      if (playlist._id === Number(event.currentTarget.id) && playlist.aSideLinks !== undefined) {
+      if (
+        playlist._id === Number(event.currentTarget.id) &&
+        playlist.aSideLinks !== undefined
+      ) {
         const aVideoArray = [];
         const bVideoArray = [];
         const aTitleArray = [];
@@ -349,11 +346,10 @@ class MixtapePlayer extends React.Component {
     });
   }
 
-
   /**
-     * Function triggered by the share mixtape button that determines whether or not the
-     *  mixtape's link is visible in the playlist.
-     */
+   * Function triggered by the share mixtape button that determines whether or not the
+   *  mixtape's link is visible in the playlist.
+   */
   onToggleShareLink() {
     this.setState({
       toggleLink: true,
@@ -380,8 +376,15 @@ class MixtapePlayer extends React.Component {
         <h4 className="player-tape-label">{tapeTitle}</h4>
         <TapeCoverImage tapeCover={tapeCover} />
 
-        <YouTube className="YouTube-vid" onReady={this.onReady} onStateChange={this.checkVid} />
-        <div className="row col-9 col-md-6 d-flex align-items-center player-ui mx-auto" style={this.divStyle}>
+        <YouTube
+          className="YouTube-vid"
+          onReady={this.onReady}
+          onStateChange={this.checkVid}
+        />
+        <div
+          className="row col-9 col-md-6 d-flex align-items-center player-ui mx-auto"
+          style={this.divStyle}
+        >
           <div className="row col-12 col-md-12">
             <FontAwesomeIcon
               className="col-3 ui-button"
@@ -423,7 +426,11 @@ class MixtapePlayer extends React.Component {
           toggleLink={toggleLink}
           onToggleLink={this.onToggleShareLink}
         />
-        <UserMixtapesList userPlaylists={userPlaylists} userName={userName} tapeRefresh={this.tapeRefresh} />
+        <UserMixtapesList
+          userPlaylists={userPlaylists}
+          userName={userName}
+          tapeRefresh={this.tapeRefresh}
+        />
       </div>
     );
   }
