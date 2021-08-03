@@ -1,9 +1,9 @@
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React from "react";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
-import Hero from './Hero.jsx';
-import Footer from './Footer.jsx';
+import Hero from "./Hero.jsx";
+import Footer from "./Footer.jsx";
 
 /** Login component renders login box with button that will verify user's identity with Google when
  * clicked. It is located at the login route and is a child component of Container.

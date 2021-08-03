@@ -1,6 +1,6 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 /** PlayerSongList component renders list of songs in the currently playing mixtape
  * at the mixtape-player route and is a child component of MixtapePlayer.
@@ -22,7 +22,7 @@ const PlayerSongList = (props) => {
   return (
     <div className="border border-info playlist-builder-player mx-auto shadow-sm p-3 mb-5 bg-white rounded">
       <div className="row">
-        <div className="col-sm-4 col-md-2" style={{ marginTop: '1rem' }}>
+        <div className="col-sm-4 col-md-2" style={{ marginTop: "1rem" }}>
           <div
             className="nav flex-column nav-pills"
             id="v-pills-tab"
@@ -66,56 +66,51 @@ const PlayerSongList = (props) => {
                   className="list-group-item track-li"
                   style={
                     currentSong === aSideLinks[0]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
-                  {aSideTitles[0]}
-                  {' '}
+                  {aSideTitles[0]}{" "}
                 </li>
                 <li
                   className="list-group-item track-li"
                   style={
                     currentSong === aSideLinks[1]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
-                  {aSideTitles[1]}
-                  {' '}
+                  {aSideTitles[1]}{" "}
                 </li>
                 <li
                   className="list-group-item track-li"
                   style={
                     currentSong === aSideLinks[2]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
-                  {aSideTitles[2]}
-                  {' '}
+                  {aSideTitles[2]}{" "}
                 </li>
                 <li
                   className="list-group-item track-li"
                   style={
                     currentSong === aSideLinks[3]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
-                  {aSideTitles[3]}
-                  {' '}
+                  {aSideTitles[3]}{" "}
                 </li>
                 <li
                   className="list-group-item track-li"
                   style={
                     currentSong === aSideLinks[4]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
-                  {aSideTitles[4]}
-                  {' '}
+                  {aSideTitles[4]}{" "}
                 </li>
               </ul>
             </div>
@@ -130,8 +125,8 @@ const PlayerSongList = (props) => {
                   className="list-group-item track-li"
                   style={
                     currentSong === bSideLinks[0]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[0]}
@@ -140,8 +135,8 @@ const PlayerSongList = (props) => {
                   className="list-group-item track-li"
                   style={
                     currentSong === bSideLinks[1]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[1]}
@@ -150,8 +145,8 @@ const PlayerSongList = (props) => {
                   className="list-group-item track-li"
                   style={
                     currentSong === bSideLinks[2]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[2]}
@@ -160,8 +155,8 @@ const PlayerSongList = (props) => {
                   className="list-group-item track-li"
                   style={
                     currentSong === bSideLinks[3]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[3]}
@@ -170,8 +165,8 @@ const PlayerSongList = (props) => {
                   className="list-group-item track-li"
                   style={
                     currentSong === bSideLinks[4]
-                      ? { backgroundColor: '#a7dae7' }
-                      : { backgroundColor: '#fff' }
+                      ? { backgroundColor: "#a7dae7" }
+                      : { backgroundColor: "#fff" }
                   }
                 >
                   {bSideTitles[4]}
@@ -187,32 +182,18 @@ const PlayerSongList = (props) => {
           >
             Flip Tape
           </button>
-          Share Your Mixtape!
-          <a
-            href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-            className="twitter-share-button"
-            data-show-count="false"
-            data-size="large"
+          <button
+            onClick={onToggleLink}
+            className="btn btn-outline-info flip-button col-12 mx-auto"
           >
-            Tweet
-
-          </a>
-          <br />
-          <div className="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large">
-
-            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Share</a>
-
-          </div>
-          {/* <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
-            <a className="a2a_dd" href="https://www.addtoany.com/share" />
-            <a className="a2a_button_facebook" />
-            <a className="a2a_button_twitter" />
-            <a className="a2a_button_whatsapp" />
-            <a className="a2a_button_reddit" />
-            <a className="a2a_button_pinterest" />
-            <a className="a2a_button_email" />
-            <a className="a2a_button_facebook_messenger" />
-          </div> */}
+            Share Mixtape
+          </button>
+          {toggleLink ? (
+            <p className="col-12 url">
+              <b>Link: </b>
+              {`http://mixtapeclub.tk:3000/mixtape-player${currentPlaylistId}`}
+            </p>
+          ) : null}
         </div>
       </div>
     </div>

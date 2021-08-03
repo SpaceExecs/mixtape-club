@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
 
 /** Navigation component renders the navbar at the top of all routes of the app
  * and contains links to the create-mixtapes, mixtape-player, and login routes. It is a child component

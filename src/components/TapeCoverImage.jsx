@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import LisaFrankenstein from '../assets/img/tapes/lisa-frankenstein-tape.gif';
-import CassetteDeck from '../assets/img/cassette-deck.png';
+import LisaFrankenstein from "../assets/img/tapes/lisa-frankenstein-tape.gif";
+import CassetteDeck from "../assets/img/cassette-deck.png";
 
 /** TapeCoverImage component renders the tape deck image and cassette tape image chosen by the user
  * at the mixtape-player route and is a child component of MixtapePlayer

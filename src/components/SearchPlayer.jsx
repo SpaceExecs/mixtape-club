@@ -1,8 +1,8 @@
 /* eslint-disable react/button-has-type */
-import React from 'react';
-import YouTube from 'react-youtube';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faPause, faPlus } from '@fortawesome/free-solid-svg-icons';
+import React from "react";
+import YouTube from "react-youtube";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlay, faPause, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 /** Search Player component renders the player interface connected with the Search component
  * at the create-mixtapes route and is a child component of CreateMixtapes.
@@ -19,32 +19,32 @@ const SearchPlayer = (props) => {
     onPassToSideB,
   } = props;
 
-  let title = selectedResult.snippet.title.replace(/&amp;/g, '&');
+  let title = selectedResult.snippet.title.replace(/&amp;/g, "&");
   title = title.replace(/&#39;/g, "'");
   title = title.replace(/&quot;/g, '"');
 
   const iconStyle = {
-    fontSize: '2.5rem',
-    marginTop: '95%',
-    color: '#fff',
+    fontSize: "2.5rem",
+    marginTop: "95%",
+    color: "#fff",
   };
   const divStyle = {
-    borderRadius: '5px',
-    marginTop: '-370px',
+    borderRadius: "5px",
+    marginTop: "-370px",
   };
 
   const titleStyle = {
-    verticalAlign: 'middle',
-    display: 'inline-block',
-    color: '#fff',
-    marginTop: '7%',
-    fontSize: '1rem',
+    verticalAlign: "middle",
+    display: "inline-block",
+    color: "#fff",
+    marginTop: "7%",
+    fontSize: "1rem",
   };
 
   const vidStyle = {
-    opacity: '0%',
-    marginLeft: '-2000px',
-    marginTop: '0.5rem',
+    opacity: "0%",
+    marginLeft: "-2000px",
+    marginTop: "0.5rem",
   };
   return (
     <div>
@@ -74,29 +74,25 @@ const SearchPlayer = (props) => {
           <button
             className="btn btn-light col-4 col-md-7"
             style={{
-              margin: '0.4rem 0.2rem',
-              fontSize: '0.8rem',
-              color: '#17a2b8',
+              margin: "0.4rem 0.2rem",
+              fontSize: "0.8rem",
+              color: "#17a2b8",
             }}
             onClick={() => onPassToSideA(selectedResult)}
           >
-            <FontAwesomeIcon style={{ color: '#17a2b8' }} icon={faPlus} />
-            {' '}
-            Side
+            <FontAwesomeIcon style={{ color: "#17a2b8" }} icon={faPlus} /> Side
             A
           </button>
           <button
             className="btn btn-light col-4 col-md-7"
             style={{
-              margin: '0.4rem 0.2rem',
-              fontSize: '0.8rem',
-              color: '#17a2b8',
+              margin: "0.4rem 0.2rem",
+              fontSize: "0.8rem",
+              color: "#17a2b8",
             }}
             onClick={() => onPassToSideB(selectedResult)}
           >
-            <FontAwesomeIcon style={{ color: '#17a2b8' }} icon={faPlus} />
-            {' '}
-            Side
+            <FontAwesomeIcon style={{ color: "#17a2b8" }} icon={faPlus} /> Side
             B
           </button>
         </div>

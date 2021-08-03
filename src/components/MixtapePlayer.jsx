@@ -1,22 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import YouTube from 'react-youtube';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from "react";
+import ReactDOM from "react-dom";
+import YouTube from "react-youtube";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
   faPause,
   faForward,
   faBackward,
-} from '@fortawesome/free-solid-svg-icons';
-import { library, config } from '@fortawesome/fontawesome-svg-core';
+} from "@fortawesome/free-solid-svg-icons";
+import { library, config } from "@fortawesome/fontawesome-svg-core";
 
-import axios from 'axios';
-import { basename } from 'path';
-import UserMixtapesList from './UserMixtapes.jsx';
-import PlayerSongList from './PlayerSongList.jsx';
-import TapeCoverImage from './TapeCoverImage.jsx';
+import axios from "axios";
+import UserMixtapesList from "./UserMixtapes.jsx";
+import PlayerSongList from "./PlayerSongList.jsx";
+import TapeCoverImage from "./TapeCoverImage.jsx";
 
-import LisaFrankenstein from '../assets/img/tapes/lisa-frankenstein-tape.gif';
+import LisaFrankenstein from "../assets/img/tapes/lisa-frankenstein-tape.gif";
 
 /** MixtapePlayer component is stateful and renders the entire mixtape-player route with it's child
  * componenets. It is a child component of Container.  Mixtape player also stores information about a
@@ -29,20 +28,20 @@ class MixtapePlayer extends React.Component {
     this.state = {
       player: null,
       playing: false,
-      aSideLinks: ['fi33-cITS0s'],
-      bSideLinks: ['H1Zm6E6Sy4Y'],
+      aSideLinks: ["fi33-cITS0s"],
+      bSideLinks: ["H1Zm6E6Sy4Y"],
       interval: null,
       playListId: null || this.props.location,
-      aSideTitles: ['Login to start making mixtapes of your own!'],
-      bSideTitles: ['Login to start making mixtapes of your own!'],
+      aSideTitles: ["Login to start making mixtapes of your own!"],
+      bSideTitles: ["Login to start making mixtapes of your own!"],
       tapeCover: LisaFrankenstein,
-      sidePlaying: ['fi33-cITS0s'],
+      sidePlaying: ["fi33-cITS0s"],
       googleId: null || this.props.googleId,
       userPlaylists: [],
-      tapeTitle: 'Operation Sparkle',
-      currentSong: '',
-      userName: '',
-      currentPlaylistId: '',
+      tapeTitle: "Operation Sparkle",
+      currentSong: "",
+      userName: "",
+      currentPlaylistId: "",
       toggleLink: false,
     };
 
@@ -60,11 +59,11 @@ class MixtapePlayer extends React.Component {
     this.onToggleShareLink = this.onToggleShareLink.bind(this);
 
     this.divStyle = {
-      borderRadius: '5px',
-      marginTop: '-360px',
+      borderRadius: "5px",
+      marginTop: "-360px",
     };
     this.iconStyle = {
-      margin: '3% 0',
+      margin: "3% 0",
     };
   }
 
@@ -85,7 +84,7 @@ class MixtapePlayer extends React.Component {
     const { googleId } = this.state;
 
     axios
-      .get('/userPlaylists', {
+      .get("/userPlaylists", {
         googleId,
       })
       .then((response) => {
@@ -124,7 +123,7 @@ class MixtapePlayer extends React.Component {
         }
       })
       .catch((err) => {
-        console.error('Error searching:', err);
+        console.error("Error searching:", err);
       });
   }
 
@@ -146,14 +145,12 @@ class MixtapePlayer extends React.Component {
 
       const id = search.slice(4);
       axios
-        .post('/mixtape-player', {
+        .post("/mixtape-player", {
           id,
         })
         .then((response) => {
           if (response.data.bSide) {
-            const {
-              aSide, bSide, tapeDeck, tapeLabel, userId,
-            } = response.data;
+            const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
               aTitleArray.push(video.snippet.title);
@@ -172,9 +169,7 @@ class MixtapePlayer extends React.Component {
               tapeTitle: tapeLabel,
             });
           } else {
-            const {
-              aSide, tapeDeck, tapeLabel, userId,
-            } = response.data;
+            const { aSide, tapeDeck, tapeLabel, userId } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
               aTitleArray.push(video.snippet.title);
@@ -280,7 +275,7 @@ class MixtapePlayer extends React.Component {
   checkVid(event) {
     if (event.data === 1) {
       let urlId = this.state.player.getVideoUrl();
-      urlId = urlId.replace('https://www.youtube.com/watch?v=', '');
+      urlId = urlId.replace("https://www.youtube.com/watch?v=", "");
 
       if (this.state.currentSong !== urlId) {
         this.setState({
@@ -295,9 +290,7 @@ class MixtapePlayer extends React.Component {
    * tape's list of songs into the YouTube Player API.
    */
   onFlip() {
-    const {
-      sidePlaying, aSideLinks, bSideLinks, player,
-    } = this.state;
+    const { sidePlaying, aSideLinks, bSideLinks, player } = this.state;
     if (sidePlaying[0] === aSideLinks[0]) {
       const sideB = bSideLinks;
       this.setState({
@@ -322,8 +315,8 @@ class MixtapePlayer extends React.Component {
 
     this.state.userPlaylists.forEach((playlist) => {
       if (
-        playlist._id === Number(event.currentTarget.id)
-        && playlist.aSideLinks !== undefined
+        playlist._id === Number(event.currentTarget.id) &&
+        playlist.aSideLinks !== undefined
       ) {
         const aVideoArray = [];
         const bVideoArray = [];
