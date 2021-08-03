@@ -100,7 +100,13 @@ const storePlaylist = (plDetails, callback) => {
   // plDetails is an object with all of our columns needing to be saved
   // when sending in request, please be sure  to include all fields, all are stings.
   const {
-    userId, aSideLinks, bSideLinks, aTitles, bTitles, tapeDeck, tapeLabel,
+    userId,
+    aSideLinks,
+    bSideLinks,
+    aTitles,
+    bTitles,
+    tapeDeck,
+    tapeLabel,
   } = plDetails;
   const playlistInfo = new Playlist({
     userId,
@@ -171,7 +177,6 @@ const updatePlaylist = async function (filter, update, callback) {
   const data = await Playlist.findOneAndUpdate(filter, update, { new: true });
   callback(data);
 };
-
 
 module.exports.findCreate = findCreate;
 module.exports.Playlist = Playlist;

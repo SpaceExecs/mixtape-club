@@ -11,8 +11,8 @@ const SearchListItem = (props) => {
   const { searchResult, onResultClick } = props;
 
   let title = searchResult.snippet.title.replace(/&amp;/g, '&');
-  title = title.replace(/&#39;/g, '\'');
-  title = title.replace(/&quot;/g, '\"');
+  title = title.replace(/&#39;/g, "'");
+  title = title.replace(/&quot;/g, '"');
   return (
     <li
       onClick={() => {

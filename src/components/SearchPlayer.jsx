@@ -10,12 +10,18 @@ import { faPlay, faPause, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const SearchPlayer = (props) => {
   const {
-    onReady, onPlayVideo, onPauseVideo, playing, selectedResult, onPassToSideA, onPassToSideB,
+    onReady,
+    onPlayVideo,
+    onPauseVideo,
+    playing,
+    selectedResult,
+    onPassToSideA,
+    onPassToSideB,
   } = props;
 
   let title = selectedResult.snippet.title.replace(/&amp;/g, '&');
-  title = title.replace(/&#39;/g, '\'');
-  title = title.replace(/&quot;/g, '\"');
+  title = title.replace(/&#39;/g, "'");
+  title = title.replace(/&quot;/g, '"');
 
   const iconStyle = {
     fontSize: '2.5rem',
@@ -47,9 +53,19 @@ const SearchPlayer = (props) => {
       </div>
       <div className="row col-12 bg-info d-flex mx-auto" style={divStyle}>
         <div className="col-2 col-md-1">
-          {playing ? <FontAwesomeIcon style={iconStyle} icon={faPause} onClick={onPauseVideo} />
-            : <FontAwesomeIcon style={iconStyle} icon={faPlay} onClick={onPlayVideo} /> }
-
+          {playing ? (
+            <FontAwesomeIcon
+              style={iconStyle}
+              icon={faPause}
+              onClick={onPauseVideo}
+            />
+          ) : (
+            <FontAwesomeIcon
+              style={iconStyle}
+              icon={faPlay}
+              onClick={onPlayVideo}
+            />
+          )}
         </div>
         <div className="col-10 col-md-8">
           <h4 style={titleStyle}>{title}</h4>
@@ -66,7 +82,8 @@ const SearchPlayer = (props) => {
           >
             <FontAwesomeIcon style={{ color: '#17a2b8' }} icon={faPlus} />
             {' '}
-            Side A
+            Side
+            A
           </button>
           <button
             className="btn btn-light col-4 col-md-7"
@@ -79,7 +96,8 @@ const SearchPlayer = (props) => {
           >
             <FontAwesomeIcon style={{ color: '#17a2b8' }} icon={faPlus} />
             {' '}
-            Side B
+            Side
+            B
           </button>
         </div>
       </div>

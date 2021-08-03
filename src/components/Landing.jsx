@@ -15,7 +15,6 @@ const Landing = (props) => {
     <div>
       <Hero />
       <h3>Hi Username, welcome to Mixtape Club!</h3>
-
     </div>
   );
 };

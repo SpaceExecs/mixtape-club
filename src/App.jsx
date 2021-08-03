@@ -27,20 +27,44 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      searchResults: [{ snippet: { title: '' }, id: { videoId: '4D2qcbu26gs' } }],
+      searchResults: [
+        { snippet: { title: '' }, id: { videoId: '4D2qcbu26gs' } },
+      ],
       player: null,
-      tapeImages: [{ image: LisaFrankenstein, name: 'Lisa Frankenstein' }, { image: GreenTape, name: 'green' }, { image: OrangeTape, name: 'orange' }, { image: BlueTape, name: 'blue' }, { image: RedTape, name: 'red' }, { image: PinkTape, name: 'pink' }],
+      tapeImages: [
+        { image: LisaFrankenstein, name: 'Lisa Frankenstein' },
+        { image: GreenTape, name: 'green' },
+        { image: OrangeTape, name: 'orange' },
+        { image: BlueTape, name: 'blue' },
+        { image: RedTape, name: 'red' },
+        { image: PinkTape, name: 'pink' },
+      ],
       builderImage: { image: BlueTape, name: 'blue' },
       tapeLabel: 'Untitled',
       playing: false,
       query: '',
-      selectedResult: { snippet: { title: 'Search for a song' }, id: { videoId: '4D2qcbu26gs' } },
+      selectedResult: {
+        snippet: { title: 'Search for a song' },
+        id: { videoId: '4D2qcbu26gs' },
+      },
       sideA: [],
       sideB: [],
       displayImageSelector: true,
       isAuthenticated: false,
-      onDeckSideA: ['Track 1 A', 'Track 2 A', 'Track 3 A', 'Track 4 A', 'Track 5 A'],
-      onDeckSideB: ['Track 1 B', 'Track 2 B', 'Track 3 B', 'Track 4 B', 'Track 5 B'],
+      onDeckSideA: [
+        'Track 1 A',
+        'Track 2 A',
+        'Track 3 A',
+        'Track 4 A',
+        'Track 5 A',
+      ],
+      onDeckSideB: [
+        'Track 1 B',
+        'Track 2 B',
+        'Track 3 B',
+        'Track 4 B',
+        'Track 5 B',
+      ],
       googleId: 'FILL_ME_IN',
       tapeBackgroundColor: '#fff',
       queryParam: '',
@@ -64,18 +88,18 @@ class App extends React.Component {
     this.logout = this.logout.bind(this);
   }
 
-
   /**
-     * When component mounts, info about user is retrieved from
-     * server using passport.
-     */
+   * When component mounts, info about user is retrieved from
+   * server using passport.
+   */
   componentDidMount() {
     this.authenticateUser();
     const { googleId } = this.state;
 
-    axios.get('/getUser', {
-      googleId,
-    })
+    axios
+      .get('/getUser', {
+        googleId,
+      })
       .then((response) => {
         console.log(response);
       })
@@ -86,9 +110,9 @@ class App extends React.Component {
   }
 
   /**
-     * Function maintains the query value of the input field from
-     * Search.jsx as it changes.
-     */
+   * Function maintains the query value of the input field from
+   * Search.jsx as it changes.
+   */
   onChange(event) {
     this.setState({
       query: event.target.value,
@@ -96,10 +120,10 @@ class App extends React.Component {
   }
 
   /**
-     * Following two functions change the state of playing when the user
-     * plays or pauses the song in the  searchPlayer in order to switch
-     * between rendering the play and pause button.
-     */
+   * Following two functions change the state of playing when the user
+   * plays or pauses the song in the  searchPlayer in order to switch
+   * between rendering the play and pause button.
+   */
   onPlayVideo() {
     const { player } = this.state;
     player.playVideo();
@@ -117,27 +141,27 @@ class App extends React.Component {
   }
 
   /**
-     * Function sets the state of the video player in SearchPlayer
-     * when the youTube Api Player component has fully loaded.
-     * @param {event} event - youTubePlayer API built-in event.
-     */
+   * Function sets the state of the video player in SearchPlayer
+   * when the youTube Api Player component has fully loaded.
+   * @param {event} event - youTubePlayer API built-in event.
+   */
   onReady(event) {
     this.setState({
       player: event.target,
     });
   }
 
-
   /**
-     * Function makes call to server with the query string. The server
-     * then makes a call to the YouTube API and returns the results.
-     * Top results are added to the state and the first result is assigned
-     * to selectedResult and loaded into the SearchPlayer.
-     */
+   * Function makes call to server with the query string. The server
+   * then makes a call to the YouTube API and returns the results.
+   * Top results are added to the state and the first result is assigned
+   * to selectedResult and loaded into the SearchPlayer.
+   */
 
   onSearch() {
     const { query } = this.state;
-    axios.post('/search', { query })
+    axios
+      .post('/search', { query })
       .then((response) => {
         this.setState({
           searchResults: response.data.items,
@@ -150,11 +174,11 @@ class App extends React.Component {
   }
 
   /**
-     * Function sets the state base on which tape image the user selects
-     * from PlaylistImageSelector.jsx.
-     *
-     * @param {object} tape - Object containing name and color of selected tape image.
-     */
+   * Function sets the state base on which tape image the user selects
+   * from PlaylistImageSelector.jsx.
+   *
+   * @param {object} tape - Object containing name and color of selected tape image.
+   */
   onSelectTapeImage(event, tape) {
     this.setState({
       builderImage: tape,
@@ -162,10 +186,10 @@ class App extends React.Component {
   }
 
   /**
-     * Function stores value of the tape label input field on the state
-     * as it changes.
-     * @param {*} event - Change event that contains the input field's current value.
-     */
+   * Function stores value of the tape label input field on the state
+   * as it changes.
+   * @param {*} event - Change event that contains the input field's current value.
+   */
   onTapeLabelChange(event) {
     this.setState({
       tapeLabel: event.target.value,
@@ -173,11 +197,11 @@ class App extends React.Component {
   }
 
   /**
-     * Function loads the selected search result into the searchPlayer
-     * and changes calls the built-in youTubePlayer playVideo function
-     * to start the song.
-     * @param {object} selected - the selected search result object.
-     */
+   * Function loads the selected search result into the searchPlayer
+   * and changes calls the built-in youTubePlayer playVideo function
+   * to start the song.
+   * @param {object} selected - the selected search result object.
+   */
   onResultClick(selected) {
     const { player } = this.state;
     this.setState({
@@ -189,41 +213,44 @@ class App extends React.Component {
     }, 0);
   }
 
-
   /**
-     * Function takes the song loaded in the searchPlayer and adds it to
-     * the array of songs on sideA, so that they appear in the playlistBuilderList
-     * and can be stored in the database.
-     * @param {object} song - object containing all the youTube data about the song.
-     */
+   * Function takes the song loaded in the searchPlayer and adds it to
+   * the array of songs on sideA, so that they appear in the playlistBuilderList
+   * and can be stored in the database.
+   * @param {object} song - object containing all the youTube data about the song.
+   */
   onPassSongToSideA(song) {
     const { sideA } = this.state;
     if (sideA.length < 5) {
       this.setState(prevState => ({ sideA: prevState.sideA.concat(song) }));
     } else {
-      alert('Side A is full, try adding songs to side B or remove songs to make more space.');
+      alert(
+        'Side A is full, try adding songs to side B or remove songs to make more space.',
+      );
     }
   }
 
   /**
- * Function takes the song loaded in the searchPlayer and adds it to
- * the array of songs on sideB, so that they appear in the playlistBuilderList
- * and can be stored in the database.
- * @param {object} song - object containing all the youTube data about the song.
- */
+   * Function takes the song loaded in the searchPlayer and adds it to
+   * the array of songs on sideB, so that they appear in the playlistBuilderList
+   * and can be stored in the database.
+   * @param {object} song - object containing all the youTube data about the song.
+   */
   onPassSongToSideB(song) {
     const { sideB } = this.state;
     if (sideB.length < 5) {
       this.setState(prevState => ({ sideB: prevState.sideB.concat(song) }));
     } else {
-      alert('Side B is full, try adding songs to side A or remove songs to make more space.');
+      alert(
+        'Side B is full, try adding songs to side A or remove songs to make more space.',
+      );
     }
   }
 
   /**
-     * Function makes the tapeImageSelector disappear from the page
-     * when an image is selected and the user clicks the save button.
-     */
+   * Function makes the tapeImageSelector disappear from the page
+   * when an image is selected and the user clicks the save button.
+   */
   onSaveTapeImage() {
     const { displayImageSelector } = this.state;
     this.setState({
@@ -232,27 +259,28 @@ class App extends React.Component {
   }
 
   /**
-     * Function takes the information stored on the state about the playlist,
-     * and makes a post request to the server which then stores the information
-     * on the database. Upon succesful storage a second post request is made to the
-     * server to retrieve th playlists id number, so that it may be shared and
-     * displayed on the page. If that call is successful, the client is re-routed
-     * to the mixtape player where they can listen to their newly created mix and share it
-     * with friends.
-     */
+   * Function takes the information stored on the state about the playlist,
+   * and makes a post request to the server which then stores the information
+   * on the database. Upon succesful storage a second post request is made to the
+   * server to retrieve th playlists id number, so that it may be shared and
+   * displayed on the page. If that call is successful, the client is re-routed
+   * to the mixtape player where they can listen to their newly created mix and share it
+   * with friends.
+   */
   onSavePlaylist() {
     const {
       googleId, sideA, sideB, builderImage, tapeLabel,
     } = this.state;
     console.log(this.state);
     const { image, name } = builderImage;
-    axios.post('/store', {
-      userId: googleId,
-      aSideLinks: sideA,
-      bSideLinks: sideB,
-      tapeDeck: image,
-      tapeLabel,
-    })
+    axios
+      .post('/store', {
+        userId: googleId,
+        aSideLinks: sideA,
+        bSideLinks: sideB,
+        tapeDeck: image,
+        tapeLabel,
+      })
       .then((response) => {
         // handle success
         // console.warn(response.config.data);
@@ -260,9 +288,10 @@ class App extends React.Component {
         // const {userId} = response.config.data;
         const key = JSON.stringify(newId.aSideLinks);
 
-        axios.post('/getlink', {
-          key,
-        })
+        axios
+          .post('/getlink', {
+            key,
+          })
           .then((response) => {
             this.setState({
               queryParam: response.data.id,
@@ -279,11 +308,10 @@ class App extends React.Component {
       });
   }
 
-
   /**
-     * Function that removes song from playlistBuilderList.
-     * @param {*} event - click event that's currentTarge.id is the song selected for removal from the playlist.
-     */
+   * Function that removes song from playlistBuilderList.
+   * @param {*} event - click event that's currentTarge.id is the song selected for removal from the playlist.
+   */
   onDeleteSong(event) {
     const index = event.currentTarget.id[1];
     const side = event.currentTarget.id[0];
@@ -306,13 +334,14 @@ class App extends React.Component {
   }
 
   /**
-     * Function makes call to server when the component mounts
-     * to check if user is authenticated using passport.js
-     * Google Strategy. Maintains record of authentication
-     * on the state.
-     */
+   * Function makes call to server when the component mounts
+   * to check if user is authenticated using passport.js
+   * Google Strategy. Maintains record of authentication
+   * on the state.
+   */
   authenticateUser() {
-    axios.get('/user/')
+    axios
+      .get('/user/')
       .then((response) => {
         if (response.data.verified) {
           this.setState({
@@ -327,9 +356,9 @@ class App extends React.Component {
   }
 
   /**
-    *  Function makes get request to server to log user out of passport on the server-side,
-    * and changes the state of the user authentication client-side.
-    */
+   *  Function makes get request to server to log user out of passport on the server-side,
+   * and changes the state of the user authentication client-side.
+   */
 
   logout() {
     axios.get('/logout');
@@ -337,7 +366,6 @@ class App extends React.Component {
       isAuthenticated: false,
     });
   }
-
 
   render() {
     const {
@@ -351,7 +379,8 @@ class App extends React.Component {
       sideA,
       sideB,
       displayImageSelector,
-      onDeckSideA, onDeckSideB,
+      onDeckSideA,
+      onDeckSideB,
       tapeBackgroundColor,
       queryParam,
       googleId,
@@ -360,7 +389,11 @@ class App extends React.Component {
     return (
       <Router>
         <div className="App">
-          <Navigation logout={this.logout} isAuthenticated={isAuthenticated} userName={userName} />
+          <Navigation
+            logout={this.logout}
+            isAuthenticated={isAuthenticated}
+            userName={userName}
+          />
           <Container
             authenticateUser={this.authenticateUser}
             isAuthenticated={isAuthenticated}
@@ -392,7 +425,6 @@ class App extends React.Component {
             queryParam={queryParam}
             googleId={googleId}
           />
-
         </div>
       </Router>
     );
