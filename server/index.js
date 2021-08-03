@@ -314,28 +314,28 @@ app.post("/search", (req, res) => {
     });
 });
 
-// app.post("/suggested", (req, res) => {
-//   const queryString = req.body.query;
-//   const url = "https://www.googleapis.com/youtube/v3/search?part=snippet";
-//   const options = {
-//     params: {
-//       key: process.env.YOUTUBE_API_KEY,
-//       q: queryString,
-//       maxResults: 8,
-//       videoEmbeddable: true,
-//       type: "video",
-//     },
-//   };
-//   axios
-//     .get(url, options)
-//     .then((response) => {
-//       res.send(response.data);
-//     })
-//     .catch((err) => {
-//       console.log("Error searching youtube:", err);
-//       res.send(err);
-//     });
-// });
+app.post("/suggested", (req, res) => {
+  const queryString = req.body.query;
+  const url = "https://www.googleapis.com/youtube/v3/search?part=snippet";
+  const options = {
+    params: {
+      key: process.env.YOUTUBE_API_KEY,
+      q: queryString,
+      maxResults: 8,
+      videoEmbeddable: true,
+      type: "video",
+    },
+  };
+  axios
+    .get(url, options)
+    .then((response) => {
+      res.send(response.data);
+    })
+    .catch((err) => {
+      console.log("Error searching youtube:", err);
+      res.send(err);
+    });
+});
 
 const PORT = 3000;
 
