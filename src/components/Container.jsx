@@ -86,7 +86,8 @@ function Container(props) {
                   onDelete={onDelete}
                 />
               )
-              : (<Login {...props} />))}
+              :
+              (<Login {...props} />))}
         />
 
         <Route

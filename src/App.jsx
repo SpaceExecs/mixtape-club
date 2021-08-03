@@ -284,10 +284,10 @@ class App extends React.Component {
      * Function that removes song from playlistBuilderList.
      * @param {*} event - click event that's currentTarge.id is the song selected for removal from the playlist.
      */
+
   onDeleteSong(event) {
     const index = event.currentTarget.id[1];
     const side = event.currentTarget.id[0];
-
     const { sideA, sideB } = this.state;
 
     if (side === 'A') {
@@ -399,4 +399,7 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+  <App />,
+  document.getElementById('app'),
+);

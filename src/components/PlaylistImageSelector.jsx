@@ -31,7 +31,13 @@ const PlaylistImageSelector = (props) => {
       </div>
       <TapeLabel onLabelChange={onLabelChange} />
       <div className="row">
-        <button className="btn btn-info col-4 col-md-2 mx-auto save-image" type="submit" onClick={onSaveImage}>Save Tape</button>
+        <button
+          className="btn btn-info col-4 col-md-2 mx-auto save-image"
+          type="submit"
+          onClick={onSaveImage}
+        >
+          Save Tape
+        </button>
       </div>
     </div>
   );
