@@ -188,7 +188,22 @@ const PlayerSongList = (props) => {
             Flip Tape
           </button>
           Share Your Mixtape!
-          <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
+          <a
+            href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+            className="twitter-share-button"
+            data-show-count="false"
+            data-size="large"
+          >
+            Tweet
+
+          </a>
+          <br />
+          <div className="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-size="large">
+
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" className="fb-xfbml-parse-ignore" rel="noreferrer">Share</a>
+
+          </div>
+          {/* <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
             <a className="a2a_dd" href="https://www.addtoany.com/share" />
             <a className="a2a_button_facebook" />
             <a className="a2a_button_twitter" />
@@ -197,7 +212,7 @@ const PlayerSongList = (props) => {
             <a className="a2a_button_pinterest" />
             <a className="a2a_button_email" />
             <a className="a2a_button_facebook_messenger" />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
