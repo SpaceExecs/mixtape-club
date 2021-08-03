@@ -187,10 +187,6 @@ const PlayerSongList = (props) => {
           >
             Flip Tape
           </button>
-          <button
-            onClick={onToggleLink}
-            className="btn btn-outline-info flip-button col-12 mx-auto"
-          />
           Share Mixtape
           <div className="a2a_kit a2a_kit_size_32 a2a_default_style">
             <a className="a2a_dd" href="https://www.addtoany.com/share" />
