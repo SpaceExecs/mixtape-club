@@ -8,7 +8,7 @@ import React, { useContext } from "react";
 
 
 const Search = (props) => {
-  const { onChange, onSearch, onSearchChange } = props;
+  const { onSearch, onSearchChange } = props;
   const { test } = useContext(TrackContext);
   console.log('INSIDE CONTEXT', test);
   return (
