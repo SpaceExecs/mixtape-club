@@ -82,6 +82,7 @@ class MixtapePlayer extends React.Component {
    * When retrieved the userPlaylists and userName are stored on the
    * state of the component.
    */
+
   getUserPlaylists() {
     const { googleId } = this.state;
 
@@ -544,6 +545,7 @@ class MixtapePlayer extends React.Component {
         <br />
         <SampleMixtape
           userPlaylists={userPlaylists}
+          tapeRefresh={this.tapeRefresh}
         />
       </div>
 

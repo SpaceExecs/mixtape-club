@@ -56,13 +56,15 @@ passport.deserializeUser((obj, done) => {
  * passport using newly created instance of GoogleStrategy
  * db.findCreate called after to store information to DB.
  */
+//  callbackURL: 'http://localhost:3000/auth/google/callback',
+// "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback"
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback",
+      callbackURL: 'http://localhost:3000/auth/google/callback',
       passReqToCallback: true,
     },
     (req, token, tokenSecret, profile, done) => {
@@ -90,13 +92,19 @@ app.get(
 /**
  * Get request used to redirect users based on success or failure of login
  */
+//  failureRedirect: 'http://localhost:3000/login'
+// res.redirect('http://localhost:3000/mixtape-player');
+
+// failureRedirect: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login"
+// res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/");
+
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login",
+    failureRedirect: 'http://localhost:3000/login',
   }),
   (req, res) => {
-    res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/");
+    res.redirect('http://localhost:3000/mixtape-player');
   }
 );
 
@@ -175,20 +183,33 @@ app.get("/", (req, res) => {
  * https://tylermcginnis.com/react-router-cannot-get-url-refresh/
  * Read article above for explanation
  */
-
-app.get("/*", (req, res) => {
-  if (req.path !== "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback") {
-    if (req.path === "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/create-mixtapes") {
+ app.get('/*', (req, res) => {
+  if (req.path !== '/auth/google/callback') {
+    if (req.path === '/create-mixtapes') {
       if (!req.user) {
-        res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login");
+        res.redirect('http://localhost:3000/login');
       }
-    } else if (req.path === "/") {
-      res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/mixtape-player");
+    } else if (req.path === '/') {
+      res.redirect('http://localhost:3000/mixtape-player');
     } else {
-      res.sendFile(path.join(__dirname, "../dist/index.html"));
+      res.sendFile(path.join(__dirname, '../dist/index.html'));
     }
   }
 });
+
+// app.get("/*", (req, res) => {
+//   if (req.path !== "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback") {
+//     if (req.path === "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/create-mixtapes") {
+//       if (!req.user) {
+//         res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login");
+//       }
+//     } else if (req.path === "/") {
+//       res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/mixtape-player");
+//     } else {
+//       res.sendFile(path.join(__dirname, "../dist/index.html"));
+//     }
+//   }
+// });
 
 /**
  * Post Request handler to aid in updating music player

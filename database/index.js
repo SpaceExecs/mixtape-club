@@ -13,7 +13,8 @@ const findOrCreate = require("mongoose-findorcreate");
  * Connection made using mongoose to connect to mongoDB stored on local machine
  */
 
-mongoose.connect("mongodb+srv://mongo:mongo@mixtape.quyfz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true });
+ mongoose.connect('mongodb://localhost/mtc', { useNewUrlParser: true });
+// mongoose.connect("mongodb+srv://mongo:mongo@mixtape.quyfz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true });
 
 /**
  *Renaming connection to save time on calls to database

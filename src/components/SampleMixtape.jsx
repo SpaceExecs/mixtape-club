@@ -8,7 +8,7 @@ const SampleMixtape = (props) => {
     <ul className="list-group col-12 mx-auto my-mixtape-list">
       <li className="list-group-item active  border border-info bg-info">
         Suggested Mixtapes:
-      {/* </li>
+      </li>
       {userPlaylists.map((playlist, i) => (
         <li
           className="list-group-item"
@@ -20,10 +20,10 @@ const SampleMixtape = (props) => {
             to={`/mixtape-player?id=${playlist._id}`}
             className="navbar-brand  user-mixes"
           >
-            {playlist.tapeLabel} {userName !== "" ? `by ${userName}` : null}
+            {playlist.tapeLabel} {'by Mixtape Club'}
           </Link>
-        ))} */}
         </li>
+        ))}
     </ul>
   );
 };
