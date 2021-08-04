@@ -4,6 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from 'sweetalert2';
 
 import Container from "./Container.jsx";
 
@@ -181,6 +182,26 @@ class App extends React.Component {
           // console.log(songTitle, songArtist);
           console.log(data);
           console.log('results from content warning', data);
+          if(data === true){
+            Swal.fire({
+              title: 'Content Warning',
+              text: "Search Results Have Been Marked By Community to Contain Explicit Lyrics",
+              icon: 'warning',
+              // showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              // cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, I Understand'
+            });
+            // .then((result) => {
+            //   if (result.isConfirmed) {
+            //     Swal.fire(
+            //       'Deleted!',
+            //       'Your file has been deleted.',
+            //       'success'
+            //     )
+            //   }
+            // })
+          };
         });
       })
       .catch((err) => {
