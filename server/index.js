@@ -61,7 +61,7 @@ passport.use(
     {
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback",
       passReqToCallback: true,
     },
     (req, token, tokenSecret, profile, done) => {
@@ -92,10 +92,10 @@ app.get(
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000/login",
+    failureRedirect: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login",
   }),
   (req, res) => {
-    res.redirect("http://localhost:3000/mixtape-player");
+    res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/");
   }
 );
 
@@ -151,7 +151,7 @@ app.get("/userPlaylists", (req, res) => {
  */
 
 app.get("/", (req, res) => {
-  res.redirect("http://localhost:3000/mixtape-player");
+  res.redirect("/mixtape-player");
 });
 
 /**
@@ -162,13 +162,13 @@ app.get("/", (req, res) => {
  */
 
 app.get("/*", (req, res) => {
-  if (req.path !== "/auth/google/callback") {
-    if (req.path === "/create-mixtapes") {
+  if (req.path !== "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback") {
+    if (req.path === "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/create-mixtapes") {
       if (!req.user) {
-        res.redirect("http://localhost:3000/login");
+        res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login");
       }
     } else if (req.path === "/") {
-      res.redirect("http://localhost:3000/mixtape-player");
+      res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/mixtape-player");
     } else {
       res.sendFile(path.join(__dirname, "../dist/index.html"));
     }
