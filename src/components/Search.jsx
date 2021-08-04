@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 
 /** Search component renders a search text input and button to search for songs to add to mixtapes
  * at the create-mixtapes route and is a child component of CreateMixtapes.
  */
 
+ import { TrackContext } from "../TrackContext.jsx";
+
+
 const Search = (props) => {
   const { onChange, onSearch } = props;
+  const { test } = useContext(TrackContext);
+  console.log('INSIDE CONTEXT', test);
   return (
     <div className="navbar navbar-light rounded-lg search d-flex justify-content-md-end">
       <input

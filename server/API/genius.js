@@ -22,7 +22,7 @@ const fetchLyrics = (title, artist) => {
     .catch(err => console.log(err));
 };
 
-fetchLyrics();
+// fetchLyrics();
 
 const fetchSongDetails = (title, artist) => {
   const options = {
