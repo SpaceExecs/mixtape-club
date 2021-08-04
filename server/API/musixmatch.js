@@ -11,12 +11,12 @@ const request = `https://api.musixmatch.com/ws/1.1/track.search?&q_track=${song}
 axios.get(request)
 .then(( { data }) => {
   const track = data.message.body.track_list[0].track
-  console.log(track);
-  console.log(!!track.explicit)
-  return !!track.explicit
+  // console.log(track);
+  // console.log(!!track.explicit);
+  return !!track.explicit;
 })
 .catch((err) => console.log(err));
-}
+};
 
 // explicitSearch('Power', 'Kanye West');
 

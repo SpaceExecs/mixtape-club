@@ -13,7 +13,6 @@ import SearchPlayer from "./SearchPlayer.jsx";
 
 const CreateMixtapes = (props) => {
   const {
-    authenticateUser,
     searchResults,
     onSearch,
     onChange,
