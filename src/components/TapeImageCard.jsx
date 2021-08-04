@@ -14,9 +14,9 @@ const TapeImageCard = (props) => {
     <div
       className="card tape-image-card"
       style={
-        builderImage === tapeImage
-          ? { backgroundColor: "#17a2b8" }
-          : { backgroundColor: tapeBackgroundColor }
+        builderImage === tapeImage ?
+          { backgroundColor: "#17a2b8" } :
+          { backgroundColor: tapeBackgroundColor }
       }
       onClick={(event) => selectImage(event, tapeImage)}
     >
