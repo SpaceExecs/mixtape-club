@@ -7,6 +7,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const db = require("../database/index");
 
+const { getRelatedVideos } = require('../server/helper');
 /**
  * express required to aid in in handling request made to server
  * session required to aid with passport request for google authentication
@@ -123,7 +124,7 @@ app.get("/logout", (req, res) => {
 
 app.get("/getUser", (req, res) => {
   db.findCreate(req.query, (info, response) => {
-    console.log(response);
+    console.log('response from app.get /getUser', response);
     res.send(response);
   });
 });
@@ -137,27 +138,28 @@ app.get("/getUser", (req, res) => {
 app.get("/userPlaylists", (req, res) => {
   if (req.user) {
     const { id, displayName } = req.user;
-    console.log(displayName);
+    console.log('displayName from app.get /userPlaylists', displayName);
     db.getAllPlaylists({ userId: id }, (info, response) => {
-      console.log(response);
+      console.log('response from db.getAllPlaylists in app.get/userPlaylists', response);
       const data = { response, displayName };
+      console.log('data from get/userPlaylists', data);
       res.send(data);
     });
   }
 });
 
 
-app.get("/suggestedPlaylists", (req, res) => {
-  if (req.user) {
-    const { id, displayName } = req.user;
-    console.log(displayName);
-    db.getAllPlaylists({ userId: id }, (info, response) => {
-      console.log(response);
-      const data = { response, displayName };
-      res.send(data);
-    });
-  }
-});
+// app.get("/suggestedPlaylists", (req, res) => {
+//   if (req.user) {
+//     const { id, displayName } = req.user;
+//     console.log(displayName);
+//     db.getAllPlaylists({ userId: id }, (info, response) => {
+//       console.log(response);
+//       const data = { response, displayName };
+//       res.send(data);
+//     });
+//   }
+// });
 
 /**
  * Get request handler used to redirect users to mixtape-player endpoint after login
@@ -199,7 +201,7 @@ app.post("/update", (req, res) => {
   const filter = { userId: "CHANGE THE FILTER SOMEHOW FILL_ME_IN" };
   const update = { tapeDeck: "FILL_ME_IN" };
   db.updatePlaylist(filter, update, (response) => {
-    console.log(response);
+    console.log('response from app.post /update', response);
     res.end("Playlist Updated");
   });
 });
@@ -220,7 +222,7 @@ app.post("/store", (req, res) => {
   };
   // console.log(playlistDetails);
   db.storePlaylist(playlistDetails, (response) => {
-    console.log(response);
+    console.log('respose from db.storePlaylist in app.post/store', response);
     res.end("Playlist Stored");
   });
 });
@@ -238,7 +240,7 @@ app.post("/getLink", (req, res) => {
     if (response === null) {
       res.end("No Results Found");
     } else {
-      console.log(response._id);
+      console.log('response._id in app.post/getLink',response._id);
 
       res.send({ id: response._id });
     }
@@ -253,7 +255,7 @@ app.post("/getLink", (req, res) => {
 app.post("/mixtape-player/", (req, res) => {
   // need to do this dynamically
   const { id } = req.body;
-  console.log(id);
+  console.log('id from app.post /mixtape-player/', id);
   const filter = { _id: id };
 
   db.retrievePlaylist(filter, (response) => {
@@ -284,6 +286,7 @@ app.post("/mixtape-player/", (req, res) => {
       }
     }
   });
+
 });
 
 /**
@@ -306,6 +309,7 @@ app.post("/search", (req, res) => {
   axios
     .get(url, options)
     .then((response) => {
+      console.log('response from app.post/search', response.data.items);
       res.send(response.data);
     })
     .catch((err) => {
@@ -314,28 +318,13 @@ app.post("/search", (req, res) => {
     });
 });
 
-app.post("/suggested", (req, res) => {
-  const queryString = req.body.query;
-  const url = "https://www.googleapis.com/youtube/v3/search?part=snippet";
-  const options = {
-    params: {
-      key: process.env.YOUTUBE_API_KEY,
-      q: queryString,
-      maxResults: 8,
-      videoEmbeddable: true,
-      type: "video",
-    },
-  };
-  axios
-    .get(url, options)
-    .then((response) => {
-      res.send(response.data);
-    })
-    .catch((err) => {
-      console.log("Error searching youtube:", err);
-      res.send(err);
-    });
-});
+// app.post("/suggested", (req, res) => {
+//   getRelatedVideos()
+//   .then((data) => data)
+//   .catch((err) =>{
+//     console.log('Error app.post /suggested', err);
+//   })
+// });
 
 const PORT = 3000;
 

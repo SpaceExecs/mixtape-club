@@ -64,6 +64,8 @@ class App extends React.Component {
       queryParam: "",
     };
 
+
+    // this.suggestMixtape = this.suggestMixtape.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
@@ -95,12 +97,12 @@ class App extends React.Component {
         googleId,
       })
       .then((response) => {
-        console.log(response);
+        console.log('response from componentDidMount app.jsx', response);
       })
       .catch((err) => {
         console.error("Error searching:", err);
       });
-    console.log("location", location);
+    console.log("location in componentDidMount", location);
   }
 
   /**
@@ -166,6 +168,38 @@ class App extends React.Component {
         console.error("Error searching:", err);
       });
   }
+
+
+
+
+
+
+
+
+
+  // suggestMixtape() {
+  //   const { selectedResult } = this.state;
+  //   axios
+  //     .post("/suggested", { selectedResult })
+  //     .then((response) => {
+  //       this.setState({
+  //         searchResults: response.data.items,
+  //         selectedResult: response.data.items[0],
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error searching:", err);
+  //     });
+  // }
+
+
+
+
+
+
+
+
+
 
   /**
    * Function sets the state base on which tape image the user selects
@@ -263,7 +297,7 @@ class App extends React.Component {
    */
   onSavePlaylist() {
     const { googleId, sideA, sideB, builderImage, tapeLabel } = this.state;
-    console.log(this.state);
+    console.log('this.state in onSavePlaylist', this.state);
     const { image, name } = builderImage;
     axios
       .post("/store", {
@@ -285,6 +319,7 @@ class App extends React.Component {
             key,
           })
           .then((response) => {
+            console.log(response.data.id);
             this.setState({
               queryParam: response.data.id,
             });

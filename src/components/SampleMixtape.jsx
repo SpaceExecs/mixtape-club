@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SamplePlaylist = (props) => {
+const SampleMixtape = (props) => {
   const { searchResults, userPlaylists, userName, tapeRefresh } = props;
 
   return (
@@ -28,4 +28,4 @@ const SamplePlaylist = (props) => {
   );
 };
 
-export default SamplePlaylist;
+export default SampleMixtape;
