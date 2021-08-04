@@ -27,7 +27,7 @@ module.exports = {
     production : {
       user : 'ubuntu',
       host : 'ec2-3-137-198-67.us-east-2.compute.amazonaws.com',
-      key: '~/.ssh/id_rsa.pub',
+      key: '~/.ssh/id_rsa',
       ref  : 'origin/master',
       repo : 'https://github.com/SpaceExecs/mixtape-club.git',
       path : '/home/ubuntu/mixtape-club',
@@ -38,7 +38,7 @@ module.exports = {
       },
       ssh_options: "StrictHostKeyChecking=no",
       'pre-deploy-local': '',
-      'post-deploy' : 'npm install && npm run restart',
+      'post-deploy' : '',
       'pre-setup': ''
     }
   }
