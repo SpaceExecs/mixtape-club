@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha",
     "react-dev": "webpack --config webpack.config.js --mode development --watch",
-    "build": "webpack --watch",
+    "build": "webpack",
     "start": "nodemon server/index.js",
     "lint": "eslint . --ext .js --ext .jsx",
     "lint:fix": "eslint --fix . --ext .js --ext .jsx",
