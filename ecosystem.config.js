@@ -38,7 +38,7 @@ module.exports = {
       },
       ssh_options: "StrictHostKeyChecking=no",
       'pre-deploy-local': '',
-      'post-deploy' : 'npm run restart',
+      'post-deploy' : '',
       'pre-setup': ''
     }
   }
