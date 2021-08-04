@@ -37,6 +37,8 @@ class App extends React.Component {
       tapeLabel: "Untitled",
       playing: false,
       query: "",
+      songTitle: "",
+      songArtist: "",
       selectedResult: {
         snippet: { title: "Search for a song" },
         id: { videoId: "4D2qcbu26gs" },
@@ -66,6 +68,7 @@ class App extends React.Component {
 
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.onReady = this.onReady.bind(this);
@@ -113,6 +116,13 @@ class App extends React.Component {
     });
   }
 
+  onSearchChange(event) {
+    console.log(event.target.value);
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  }
+
   /**
    * Following two functions change the state of playing when the user
    * plays or pauses the song in the  searchPlayer in order to switch
@@ -153,7 +163,9 @@ class App extends React.Component {
    */
 
   onSearch() {
-    const { query } = this.state;
+    const { songTitle, songArtist } = this.state;
+    const query  = `${songTitle} ${songArtist}`;
+    console.log('THIS IS QUERY', query);
     axios
       .post("/search", { query })
       .then((response) => {
@@ -393,6 +405,7 @@ class App extends React.Component {
             onPauseVideo={this.onPauseVideo}
             onPlayVideo={this.onPlayVideo}
             onChange={this.onChange}
+            onSearchChange={this.onSearchChange}
             onSearch={this.onSearch}
             onResultClick={this.onResultClick}
             playing={playing}

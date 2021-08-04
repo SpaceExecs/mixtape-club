@@ -15,6 +15,7 @@ const CreateMixtapes = (props) => {
   const {
     searchResults,
     onSearch,
+    onSearchChange,
     onChange,
     onPlayVideo,
     onPauseVideo,
@@ -53,7 +54,7 @@ const CreateMixtapes = (props) => {
         />
       ) : (
         <div className="mx-auto" style={{ maxWidth: "860px" }}>
-          <Search onSearch={onSearch} onChange={onChange} />
+          <Search onSearch={onSearch} onChange={onChange} onSearchChange={onSearchChange} />
           <SearchPlayer
             onPlayVideo={onPlayVideo}
             onReady={onReady}
