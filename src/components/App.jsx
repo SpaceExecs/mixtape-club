@@ -119,7 +119,6 @@ class App extends React.Component {
   }
 
   onSearchChange(event) {
-    console.log(event.target.value);
     this.setState({
       [event.target.name]: event.target.value,
     });
@@ -167,13 +166,21 @@ class App extends React.Component {
   onSearch() {
     const { songTitle, songArtist } = this.state;
     const query  = `${songTitle} ${songArtist}`;
-    console.log('THIS IS QUERY', query);
+    // console.log('THIS IS QUERY', query);
     axios
       .post("/search", { query })
       .then((response) => {
         this.setState({
           searchResults: response.data.items,
           selectedResult: response.data.items[0],
+        });
+      })
+      .then(() => {
+        axios.post("/contentWarning", { songTitle, songArtist })
+        .then(( { data }) => {
+          // console.log(songTitle, songArtist);
+          console.log(data);
+          console.log('results from content warning', data);
         });
       })
       .catch((err) => {

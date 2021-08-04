@@ -88,6 +88,7 @@
     "react-bootstrap": "^1.0.0-beta.9",
     "react-dom": "^16.5.2",
     "react-router-dom": "^5.0.1",
-    "react-youtube": "^7.9.0"
+    "react-youtube": "^7.9.0",
+    "sweetalert2": "^11.1.2"
   }
 }
