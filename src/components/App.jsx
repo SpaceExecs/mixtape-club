@@ -187,20 +187,9 @@ class App extends React.Component {
               title: 'Content Warning',
               text: "Search Results Have Been Marked By Community to Contain Explicit Lyrics",
               icon: 'warning',
-              // showCancelButton: true,
               confirmButtonColor: '#3085d6',
-              // cancelButtonColor: '#d33',
               confirmButtonText: 'Yes, I Understand'
             });
-            // .then((result) => {
-            //   if (result.isConfirmed) {
-            //     Swal.fire(
-            //       'Deleted!',
-            //       'Your file has been deleted.',
-            //       'success'
-            //     )
-            //   }
-            // })
           };
         });
       })
