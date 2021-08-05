@@ -13,9 +13,9 @@ import SearchPlayer from "./SearchPlayer.jsx";
 
 const CreateMixtapes = (props) => {
   const {
+    authenticateUser,
     searchResults,
     onSearch,
-    onSearchChange,
     onChange,
     onPlayVideo,
     onPauseVideo,
@@ -54,7 +54,7 @@ const CreateMixtapes = (props) => {
         />
       ) : (
         <div className="mx-auto" style={{ maxWidth: "860px" }}>
-          <Search onSearch={onSearch} onChange={onChange} onSearchChange={onSearchChange} />
+          <Search onSearch={onSearch} onChange={onChange} />
           <SearchPlayer
             onPlayVideo={onPlayVideo}
             onReady={onReady}

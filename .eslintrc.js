@@ -25,6 +25,6 @@ module.exports = {
     "eol-last": ["error", "always"],
     "object-curly-newline": "off",
     "operator-linebreak": ["error", "after"],
-    "react/prop-types": 0,
+    "react/prop-types": 0
   },
 };

@@ -3,8 +3,6 @@ const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 const findOrCreate = require("mongoose-findorcreate");
 
-
-require("dotenv").config();
 /**
  * Mongoose required to connect to db as well as organize schema
  * Autoincrement required to maintain order for playlists stored
@@ -15,9 +13,7 @@ require("dotenv").config();
  * Connection made using mongoose to connect to mongoDB stored on local machine
  */
 
- mongoose.connect(process.env.ENVIRONMENT_DB, { useNewUrlParser: true });
-
-// mongoose.connect("mongodb+srv://mongo:mongo@mixtape.quyfz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true });
+mongoose.connect("mongodb+srv://mongo:mongo@mixtape.quyfz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true });
 
 /**
  *Renaming connection to save time on calls to database
