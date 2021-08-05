@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -19,6 +19,8 @@ const PlayerSongList = (props) => {
     onToggleLink,
   } = props;
 
+  const [ listView, setListView ] = useState('side A');
+
   return (
     <div className="border border-info playlist-builder-player mx-auto shadow-sm p-3 mb-5 bg-white rounded">
       <div className="row">
@@ -30,24 +32,26 @@ const PlayerSongList = (props) => {
             aria-orientation="vertical"
           >
             <a
-              className="nav-link active"
+              className={ listView === 'side A' ? "nav-link active" : "nav-link" }
               id="v-pills-home-tab"
               data-toggle="pill"
               href="#v-pills-home"
               role="tab"
               aria-controls="v-pills-home"
               aria-selected="true"
+              onClick={() => { setListView('side A'); }}
             >
               Side A
             </a>
             <a
-              className="nav-link"
+              className={ listView === 'side B' ? "nav-link active" : "nav-link" }
               id="v-pills-profile-tab"
               data-toggle="pill"
               href="#v-pills-profile"
               role="tab"
               aria-controls="v-pills-profile"
               aria-selected="false"
+              onClick={() => { setListView('side B'); }}
             >
               Side B
             </a>
@@ -55,6 +59,7 @@ const PlayerSongList = (props) => {
         </div>
         <div className="col-sm-4 col-md-7">
           <div className="tab-content" id="v-pills-tabContent">
+          { listView === 'side A' ?
             <div
               className="tab-pane fade show active"
               id="v-pills-home"
@@ -114,8 +119,9 @@ const PlayerSongList = (props) => {
                 </li>
               </ul>
             </div>
+            :
             <div
-              className="tab-pane fade"
+              // className="tab-pane fade"
               id="v-pills-profile"
               role="tabpanel"
               aria-labelledby="v-pills-profile-tab"
@@ -173,11 +179,13 @@ const PlayerSongList = (props) => {
                 </li>
               </ul>
             </div>
+            }
           </div>
         </div>
         <div className=" col-12 col-md-3">
           <button
             onClick={onFlip}
+            type='submit'
             className="btn btn-info col-12 flip-button mx-auto"
           >
             Flip Tape
