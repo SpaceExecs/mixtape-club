@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import YouTube from "react-youtube";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,6 +10,7 @@ import {
 import { library, config } from "@fortawesome/fontawesome-svg-core";
 
 import axios from "axios";
+import advisory from "../assets/img/parentalAdvisory.png";
 import UserMixtapesList from "./UserMixtapes.jsx";
 import SampleMixtape from "./SampleMixtape.jsx";
 import PlayerSongList from "./PlayerSongList.jsx";
@@ -44,6 +44,7 @@ class MixtapePlayer extends React.Component {
       userName: "",
       currentPlaylistId: "",
       toggleLink: false,
+      explicitContent: false
     };
 
     this.getUserPlaylists();
@@ -93,13 +94,15 @@ class MixtapePlayer extends React.Component {
       .then((response) => {
         const { data } = response;
 
+        console.log('THIS IS DATA', data);
+
         const aVideoArray = [];
         const bVideoArray = [];
         const aTitleArray = [];
         const bTitleArray = [];
         const aSide = JSON.parse(data.response[0].aSideLinks);
         const bSide = JSON.parse(data.response[0].bSideLinks);
-        console.log('aSide', aSide[0].id);
+        // console.log('aSide', aSide[0].id);
         this.setState({
           userPlaylists: data.response,
           userName: data.displayName,
@@ -122,6 +125,7 @@ class MixtapePlayer extends React.Component {
             tapeCover: data.response[0].tapeDeck,
             sidePlaying: aVideoArray,
             tapeTitle: data.response[0].tapeLabel,
+            // explicitContent
           });
           this.state.player.loadPlaylist({ playlist: this.state.sidePlaying });
         }
@@ -201,6 +205,7 @@ class MixtapePlayer extends React.Component {
           id,
         })
         .then((response) => {
+          console.log('RESPONSE TO MIXTAPE PLAYER', response);
           if (response.data.bSide) {
             const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
             aSide.forEach((video) => {
@@ -496,6 +501,7 @@ class MixtapePlayer extends React.Component {
           className="row col-9 col-md-6 d-flex align-items-center player-ui mx-auto"
           style={this.divStyle}
         >
+          <img className='advisory' src={advisory} alt='parental guidance suggested'/>
           <div className="row col-12 col-md-12">
             <FontAwesomeIcon
               className="col-3 ui-button"
