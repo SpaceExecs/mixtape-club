@@ -256,7 +256,7 @@ class MixtapePlayer extends React.Component {
 
   //     const id = search.slice(4);
   //     axios
-  //       .post("/mixtape-player", {
+  //       .post("/suggested", {
   //         id,
   //       })
   //       .then((response) => {
@@ -457,6 +457,42 @@ class MixtapePlayer extends React.Component {
     });
   }
 
+  // suggestedRefresh(event) {
+  //   // location.reload()
+
+  //   this.state.userPlaylists.forEach((playlist) => {
+  //     if (
+  //       playlist._id === Number(event.currentTarget.id) &&
+  //       playlist.aSideLinks !== undefined
+  //     ) {
+  //       const aVideoArray = [];
+  //       const bVideoArray = [];
+  //       const aTitleArray = [];
+  //       const bTitleArray = [];
+  //       const aSideLinks = JSON.parse(playlist.aSideLinks);
+  //       const bSideLinks = JSON.parse(playlist.bSideLinks);
+  //       aSideLinks.forEach((video) => {
+  //         aVideoArray.push(video.id.videoId);
+  //         aTitleArray.push(video.snippet.title);
+  //       });
+  //       bSideLinks.forEach((video) => {
+  //         bVideoArray.push(video.id.videoId);
+  //         bTitleArray.push(video.snippet.title);
+  //       });
+  //       this.setState({
+  //         aSideLinks: aVideoArray,
+  //         bSideLinks: bVideoArray,
+  //         aSideTitles: aTitleArray,
+  //         bSideTitles: bTitleArray,
+  //         tapeCover: playlist.tapeDeck,
+  //         sidePlaying: aVideoArray,
+  //         tapeTitle: playlist.tapeLabel,
+  //       });
+  //       this.state.player.loadPlaylist({ playlist: aVideoArray });
+  //     }
+  //   });
+  // }
+
   /**
    * Function triggered by the share mixtape button that determines whether or not the
    *  mixtape's link is visible in the playlist.
@@ -545,7 +581,7 @@ class MixtapePlayer extends React.Component {
         <br />
         <SampleMixtape
           userPlaylists={userPlaylists}
-          tapeRefresh={this.tapeRefresh}
+          // suggestedRefresh={this.suggestedRefresh}
         />
       </div>
 

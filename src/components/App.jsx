@@ -377,9 +377,9 @@ class App extends React.Component {
         // const {userId} = response.config.data;
         // eslint-disable-next-line prefer-destructuring
         const videoId = newId.aSideLinks[0].id.videoId;
-        console.log(videoId);
+
         const key = JSON.stringify(newId.aSideLinks);
-        // console.log('key from onSavePlaylist', key);
+
 
         axios
           .post('/suggested', {

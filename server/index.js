@@ -364,13 +364,6 @@ app.post('/suggested', (req, res) =>{
 });
 
 app.use('/', lyricRoutes);
-// app.post("/suggested", (req, res) => {
-//   getRelatedVideos()
-//   .then((data) => data)
-//   .catch((err) =>{
-//     console.log('Error app.post /suggested', err);
-//   })
-// });
 
 const PORT = 3000;
 

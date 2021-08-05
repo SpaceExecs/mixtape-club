@@ -56,6 +56,28 @@ playlistSchema.plugin(findOrCreate);
 playlistSchema.plugin(autoIncrement.plugin, "playlist");
 const Playlist = mongoose.model("Playlist", playlistSchema);
 
+/*
+suggestedSchema to replicate playlistSchema to add suggestedMixtape to DB
+*/
+
+const suggestedSchema = new mongoose.Schema({
+  id: Number,
+  userId: String,
+  aSideLinks: String,
+  bSideLinks: String,
+  aTitles: String,
+  bTitles: String,
+  tapeDeck: String,
+  tapeLabel: String,
+  explicitContent: Boolean
+});
+suggestedSchema.plugin(findOrCreate);
+suggestedSchema.plugin(autoIncrement.plugin, "suggested");
+const Suggested = mongoose.model("Suggested", suggestedSchema);
+
+
+
+
 /**
  * Schema for user created using mongoose
  * findOrCreate added to the schema via plugin
@@ -135,6 +157,44 @@ const storePlaylist = (plDetails, callback) => {
 };
 
 /**
+ * storeSuggested saves suggested model to database
+ * @param {*} plDetails {object} information taken from state of Mixtape-player
+ * @param {*} callback used to give information back to function calling storePlaylist
+ */
+
+const storeSuggested = (plDetails, callback) => {
+  // plDetails is an object with all of our columns needing to be saved
+  // when sending in request, please be sure  to include all fields, all are stings.
+  const {
+    userId,
+    aSideLinks,
+    bSideLinks,
+    aTitles,
+    bTitles,
+    tapeDeck,
+    tapeLabel,
+    explicitContent
+  } = plDetails;
+  const suggestedInfo = new Suggested({
+    userId,
+    aSideLinks,
+    bSideLinks,
+    aTitles,
+    bTitles,
+    tapeDeck,
+    tapeLabel,
+    explicitContent
+  });
+  suggestedInfo.save((err) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback("Success");
+    }
+  });
+};
+
+/**
  * retrievePlaylist used to get information from playlist model in database
  * @filter {object} filter to sort through column names in database
  * @param {*} callback used to give information back to function calling retrievePlaylist
@@ -142,6 +202,23 @@ const storePlaylist = (plDetails, callback) => {
 
 const retrievePlaylist = (filter, callback) => {
   Playlist.findOne(filter, (err, data) => {
+    if (err) {
+      callback(err);
+    } else {
+      callback(data);
+    }
+  });
+};
+
+
+/**
+ * retrieveSuggested used to get information from playlist model in database
+ * @filter {object} filter to sort through column names in database
+ * @param {*} callback used to give information back to function calling retrievePlaylist
+ */
+
+const retrieveSuggested = (filter, callback) => {
+  Suggested.findOne(filter, (err, data) => {
     if (err) {
       callback(err);
     } else {
@@ -159,6 +236,25 @@ const retrievePlaylist = (filter, callback) => {
 
 const getAllPlaylists = (filter, callback) => {
   Playlist.find(filter, (err, data) => {
+    if (err) {
+      console.log("error", err);
+      callback(err);
+    } else {
+      // console.log("data", data);
+      callback(null, data);
+    }
+  });
+};
+
+/**
+ * getAllSuggested is designed to retrieve all suggested playlists for a particular user
+ * information is then passed to mixtape-player to present info to user after login
+ * @param {*} filter {object} filter to sort through column names in database
+ * @param {*} callback used to give information back to function calling getAllPlaylists
+ */
+
+ const getAllSuggested = (filter, callback) => {
+  Suggested.find(filter, (err, data) => {
     if (err) {
       console.log("error", err);
       callback(err);
@@ -188,8 +284,12 @@ const updatePlaylist = async function (filter, update, callback) {
 
 module.exports.findCreate = findCreate;
 module.exports.Playlist = Playlist;
+module.exports.Suggested = Suggested;
 module.exports.User = User;
 module.exports.storePlaylist = storePlaylist;
+module.exports.storeSuggested = storeSuggested;
 module.exports.updatePlaylist = updatePlaylist;
 module.exports.retrievePlaylist = retrievePlaylist;
+module.exports.retrieveSuggested = retrieveSuggested;
 module.exports.getAllPlaylists = getAllPlaylists;
+module.exports.getAllSuggested = getAllSuggested;
