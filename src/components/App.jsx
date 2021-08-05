@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -37,6 +39,8 @@ class App extends React.Component {
       tapeLabel: "Untitled",
       playing: false,
       query: "",
+      songTitle: "",
+      songArtist: "",
       selectedResult: {
         snippet: { title: "Search for a song" },
         id: { videoId: "4D2qcbu26gs" },
@@ -64,8 +68,11 @@ class App extends React.Component {
       queryParam: "",
     };
 
+
+    this.suggestMixtape = this.suggestMixtape.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.onReady = this.onReady.bind(this);
@@ -95,12 +102,13 @@ class App extends React.Component {
         googleId,
       })
       .then((response) => {
-        console.log(response);
+        console.log('response from componentDidMount app.jsx', response);
       })
       .catch((err) => {
         console.error("Error searching:", err);
       });
-    console.log("location", location);
+    console.log("location in componentDidMount", location);
+    this.suggestMixtape();
   }
 
   /**
@@ -110,6 +118,13 @@ class App extends React.Component {
   onChange(event) {
     this.setState({
       query: event.target.value,
+    });
+  }
+
+  onSearchChange(event) {
+    console.log(event.target.value);
+    this.setState({
+      [event.target.name]: event.target.value,
     });
   }
 
@@ -153,7 +168,9 @@ class App extends React.Component {
    */
 
   onSearch() {
-    const { query } = this.state;
+    const { songTitle, songArtist } = this.state;
+    const query  = `${songTitle} ${songArtist}`;
+    console.log('THIS IS QUERY', query);
     axios
       .post("/search", { query })
       .then((response) => {
@@ -166,6 +183,39 @@ class App extends React.Component {
         console.error("Error searching:", err);
       });
   }
+
+
+
+
+
+
+
+
+
+  suggestMixtape() {
+    const { selectedResult } = this.state;
+    axios
+      .post("/suggested", { selectedResult })
+      .then((response) => {
+        console.log('response from suggestMixtape', response);
+        this.setState({
+          searchResults: response.data.items,
+          selectedResult: response.data.items[0],
+        });
+      })
+      .catch((err) => {
+        console.error("Error searching:", err);
+      });
+  }
+
+
+
+
+
+
+
+
+
 
   /**
    * Function sets the state base on which tape image the user selects
@@ -263,41 +313,45 @@ class App extends React.Component {
    */
   onSavePlaylist() {
     const { googleId, sideA, sideB, builderImage, tapeLabel } = this.state;
-    console.log(this.state);
+    console.log('this.state in onSavePlaylist', this.state);
     const { image, name } = builderImage;
     axios
-      .post("/store", {
-        userId: googleId,
-        aSideLinks: sideA,
-        bSideLinks: sideB,
-        tapeDeck: image,
-        tapeLabel,
+    .post("/store", {
+      userId: googleId,
+      aSideLinks: sideA,
+      bSideLinks: sideB,
+      tapeDeck: image,
+      tapeLabel,
+    })
+    .then((response) => {
+      // handle success
+      console.log('response.config.data', JSON.parse(response.config.data));
+      const newId = JSON.parse(response.config.data);
+      // const {userId} = response.config.data;
+      console.log('newId', newId.aSideLinks[0].id);
+      const key = JSON.stringify(newId.aSideLinks);
+      console.log('key from onSavePlaylist', key);
+
+      axios
+      .post("/getlink", {
+        key,
       })
       .then((response) => {
-        // handle success
-        // console.warn(response.config.data);
-        const newId = JSON.parse(response.config.data);
-        // const {userId} = response.config.data;
-        const key = JSON.stringify(newId.aSideLinks);
-
-        axios
-          .post("/getlink", {
-            key,
-          })
-          .then((response) => {
-            this.setState({
-              queryParam: response.data.id,
-            });
-            location.assign(`/mixtape-player?id=${response.data.id}`);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        console.log('I am response.data.id', response.data.id);
+        this.setState({
+          queryParam: response.data.id,
+        });
+        location.assign(`/mixtape-player?id=${response.data.id}`);
       })
       .catch((error) => {
-        // handle error
         console.log(error);
       });
+    })
+    .catch((error) => {
+      // handle error
+      console.log(error);
+    });
+    // this.suggestMixtape();
   }
 
   /**
@@ -393,7 +447,9 @@ class App extends React.Component {
             onPauseVideo={this.onPauseVideo}
             onPlayVideo={this.onPlayVideo}
             onChange={this.onChange}
+            onSearchChange={this.onSearchChange}
             onSearch={this.onSearch}
+            suggestMixtape={this.suggestMixtape}
             onResultClick={this.onResultClick}
             playing={playing}
             searchResults={searchResults}
@@ -422,6 +478,5 @@ class App extends React.Component {
     );
   }
 }
-
 
 export default App;
