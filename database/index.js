@@ -163,7 +163,7 @@ const getAllPlaylists = (filter, callback) => {
       console.log("error", err);
       callback(err);
     } else {
-      console.log("data", data);
+      // console.log("data", data);
       callback(null, data);
     }
   });

@@ -1,23 +1,23 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
-import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
-import axios from "axios";
-import "../App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import axios from 'axios';
+import '../App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Swal from 'sweetalert2';
 
-import Container from "./Container.jsx";
+import Container from './Container.jsx';
 
-import Navigation from "./Navbar.jsx";
+import Navigation from './Navbar.jsx';
 
-import LisaFrankenstein from "../assets/img/tapes/lisa-frankenstein-tape.gif";
-import GreenTape from "../assets/img/tapes/green-tape.gif";
-import OrangeTape from "../assets/img/tapes/orange-tape.gif";
-import BlueTape from "../assets/img/tapes/blue-tape.gif";
-import RedTape from "../assets/img/tapes/red-tape.gif";
-import PinkTape from "../assets/img/tapes/pink-tape.gif";
+import LisaFrankenstein from '../assets/img/tapes/lisa-frankenstein-tape.gif';
+import GreenTape from '../assets/img/tapes/green-tape.gif';
+import OrangeTape from '../assets/img/tapes/orange-tape.gif';
+import BlueTape from '../assets/img/tapes/blue-tape.gif';
+import RedTape from '../assets/img/tapes/red-tape.gif';
+import PinkTape from '../assets/img/tapes/pink-tape.gif';
 
 class App extends React.Component {
   constructor(props) {
@@ -25,54 +25,53 @@ class App extends React.Component {
 
     this.state = {
       searchResults: [
-        { snippet: { title: "" }, id: { videoId: "4D2qcbu26gs" } },
+        { snippet: { title: '' }, id: { videoId: '4D2qcbu26gs' } },
       ],
       player: null,
       tapeImages: [
-        { image: LisaFrankenstein, name: "Lisa Frankenstein" },
-        { image: GreenTape, name: "green" },
-        { image: OrangeTape, name: "orange" },
-        { image: BlueTape, name: "blue" },
-        { image: RedTape, name: "red" },
-        { image: PinkTape, name: "pink" },
+        { image: LisaFrankenstein, name: 'Lisa Frankenstein' },
+        { image: GreenTape, name: 'green' },
+        { image: OrangeTape, name: 'orange' },
+        { image: BlueTape, name: 'blue' },
+        { image: RedTape, name: 'red' },
+        { image: PinkTape, name: 'pink' },
       ],
-      builderImage: { image: BlueTape, name: "blue" },
-      tapeLabel: "Untitled",
+      builderImage: { image: BlueTape, name: 'blue' },
+      tapeLabel: 'Untitled',
       playing: false,
-      query: "",
-      songTitle: "",
-      songArtist: "",
+      query: '',
+      songTitle: '',
+      songArtist: '',
       selectedResult: {
-        snippet: { title: "Search for a song" },
-        id: { videoId: "4D2qcbu26gs" },
+        snippet: { title: 'Search for a song' },
+        id: { videoId: '4D2qcbu26gs' },
       },
       sideA: [],
       sideB: [],
       displayImageSelector: true,
       isAuthenticated: false,
       onDeckSideA: [
-        "Track 1 A",
-        "Track 2 A",
-        "Track 3 A",
-        "Track 4 A",
-        "Track 5 A",
+        'Track 1 A',
+        'Track 2 A',
+        'Track 3 A',
+        'Track 4 A',
+        'Track 5 A',
       ],
       onDeckSideB: [
-        "Track 1 B",
-        "Track 2 B",
-        "Track 3 B",
-        "Track 4 B",
-        "Track 5 B",
+        'Track 1 B',
+        'Track 2 B',
+        'Track 3 B',
+        'Track 4 B',
+        'Track 5 B',
       ],
-      googleId: "FILL_ME_IN",
-      tapeBackgroundColor: "#fff",
-      queryParam: "",
+      googleId: 'FILL_ME_IN',
+      tapeBackgroundColor: '#fff',
+      queryParam: '',
       explicitContent: false,
       explicitSearch: false,
     };
 
-
-    this.suggestMixtape = this.suggestMixtape.bind(this);
+    // this.suggestMixtape = this.suggestMixtape.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -101,17 +100,17 @@ class App extends React.Component {
     const { googleId } = this.state;
 
     axios
-      .get("/getUser", {
+      .get('/getUser', {
         googleId,
       })
       .then((response) => {
         console.log('response from componentDidMount app.jsx', response);
       })
       .catch((err) => {
-        console.error("Error searching:", err);
+        console.error('Error searching:', err);
       });
-    console.log("location in componentDidMount", location);
-    this.suggestMixtape();
+    console.log('location in componentDidMount', location);
+    // this.suggestMixtape();
   }
 
   /**
@@ -171,10 +170,10 @@ class App extends React.Component {
 
   onSearch() {
     const { songTitle, songArtist, explicitSearch } = this.state;
-    const query  = `${songTitle} ${songArtist}`;
+    const query = `${songTitle} ${songArtist}`;
     // console.log('THIS IS QUERY', query);
     axios
-      .post("/search", { query })
+      .post('/search', { query })
       .then((response) => {
         this.setState({
           searchResults: response.data.items,
@@ -182,67 +181,52 @@ class App extends React.Component {
         });
       })
       .then(() => {
-        axios.post("/contentWarning", { songTitle, songArtist })
-        .then(( { data }) => {
-          // console.log(songTitle, songArtist);
-          // console.log(data);
-          // console.log('results from content warning', data);
-          if(data === true){
-            Swal.fire({
-              title: 'Content Warning',
-              text: "Search Results Have Been Marked By The Community To Contain Explicit Lyrics",
-              icon: 'warning',
-              // imageUrl: "https://i.imgur.com/JkwhjZR.png",
-              // imageWidth: 400,
-              // imageHeight: 200,
-              imageAlt: 'parental guidance',
-              confirmButtonColor: '#3085d6',
-              confirmButtonText: 'Yes, I Understand'
-            }).then(() => {
-              this.setState({ explicitSearch: true });
-            });
-          } else {
-            this.setState({ explicitSearch: false });
-          }
-        });
+        axios
+          .post('/contentWarning', { songTitle, songArtist })
+          .then(({ data }) => {
+            // console.log(songTitle, songArtist);
+            // console.log(data);
+            // console.log('results from content warning', data);
+            if (data === true) {
+              Swal.fire({
+                title: 'Content Warning',
+                text: 'Search Results Have Been Marked By The Community To Contain Explicit Lyrics',
+                icon: 'warning',
+                // imageUrl: "https://i.imgur.com/JkwhjZR.png",
+                // imageWidth: 400,
+                // imageHeight: 200,
+                imageAlt: 'parental guidance',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, I Understand',
+              }).then(() => {
+                this.setState({ explicitSearch: true });
+              });
+            } else {
+              this.setState({ explicitSearch: false });
+            }
+          });
       })
       .catch((err) => {
-        console.error("Error searching:", err);
+        console.error('Error searching:', err);
       });
   }
 
-
-
-
-
-
-
-
-
-  suggestMixtape() {
-    const { selectedResult } = this.state;
-    axios
-      .post("/suggested", { selectedResult })
-      .then((response) => {
-        console.log('response from suggestMixtape', response);
-        this.setState({
-          searchResults: response.data.items,
-          selectedResult: response.data.items[0],
-        });
-      })
-      .catch((err) => {
-        console.error("Error searching:", err);
-      });
-  }
-
-
-
-
-
-
-
-
-
+  // eslint-disable-next-line react/sort-comp
+  // suggestMixtape() {
+  //   const { selectedResult } = this.state;
+  //   axios
+  //     .post('/suggested', { selectedResult })
+  //     .then((response) => {
+  //       console.log('response from suggestMixtape', response);
+  //       this.setState({
+  //         searchResults: response.data.items,
+  //         selectedResult: response.data.items[0],
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error searching:', err);
+  //     });
+  // }
 
   /**
    * Function sets the state base on which tape image the user selects
@@ -295,7 +279,9 @@ class App extends React.Component {
     let timerInterval;
     if (sideA.length < 5) {
       this.setState((prevState) => ({ sideA: prevState.sideA.concat(song) }));
-      if(explicitSearch) { this.setState({ explicitContent: true }); }
+      if (explicitSearch) {
+        this.setState({ explicitContent: true });
+      }
     } else {
       Swal.fire({
         title: 'Flip The Tape!',
@@ -311,7 +297,7 @@ class App extends React.Component {
         },
         willClose: () => {
           clearInterval(timerInterval);
-        }
+        },
       });
     }
   }
@@ -327,7 +313,9 @@ class App extends React.Component {
     let timerInterval;
     if (sideB.length < 5) {
       this.setState((prevState) => ({ sideB: prevState.sideB.concat(song) }));
-      if(explicitSearch) { this.setState({ explicitContent: true }); }
+      if (explicitSearch) {
+        this.setState({ explicitContent: true });
+      }
     } else {
       Swal.fire({
         title: 'Flip The Tape!',
@@ -343,7 +331,7 @@ class App extends React.Component {
         },
         willClose: () => {
           clearInterval(timerInterval);
-        }
+        },
       });
     }
   }
@@ -369,46 +357,59 @@ class App extends React.Component {
    * with friends.
    */
   onSavePlaylist() {
-    const { googleId, sideA, sideB, builderImage, tapeLabel, explicitContent } = this.state;
+    const { googleId, sideA, sideB, builderImage, tapeLabel, explicitContent } =
+      this.state;
     console.log('this.state in onSavePlaylist', this.state);
     const { image, name } = builderImage;
     axios
-    .post("/store", {
-      userId: googleId,
-      aSideLinks: sideA,
-      bSideLinks: sideB,
-      tapeDeck: image,
-      tapeLabel,
-      explicitContent,
-    })
-    .then((response) => {
-      // handle success
-      console.log('response.config.data', JSON.parse(response.config.data));
-      const newId = JSON.parse(response.config.data);
-      // const {userId} = response.config.data;
-      console.log('newId', newId.aSideLinks[0].id);
-      const key = JSON.stringify(newId.aSideLinks);
-      console.log('key from onSavePlaylist', key);
-
-      axios
-      .post("/getlink", {
-        key,
+      .post('/store', {
+        userId: googleId,
+        aSideLinks: sideA,
+        bSideLinks: sideB,
+        tapeDeck: image,
+        tapeLabel,
+        explicitContent,
       })
       .then((response) => {
-        console.log('I am response.data.id', response.data.id);
-        this.setState({
-          queryParam: response.data.id,
-        });
-        location.assign(`/mixtape-player?id=${response.data.id}`);
+        // handle success
+        console.log('response.config.data', JSON.parse(response.config.data));
+        const newId = JSON.parse(response.config.data);
+        // const {userId} = response.config.data;
+        // eslint-disable-next-line prefer-destructuring
+        const videoId = newId.aSideLinks[0].id.videoId;
+        console.log(videoId);
+        const key = JSON.stringify(newId.aSideLinks);
+        // console.log('key from onSavePlaylist', key);
+
+        axios
+          .post('/suggested', {
+            videoId,
+          })
+          .then((response) => {
+            console.log('response /suggested videoId', response);
+            return response;
+          })
+          .catch((err) => console.log('ERROR /success', err));
+
+        axios
+          .post('/getlink', {
+            key,
+          })
+          .then((response) => {
+            console.log('I am response.data.id', response.data.id);
+            this.setState({
+              queryParam: response.data.id,
+            });
+            location.assign(`/mixtape-player?id=${response.data.id}`);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
+        // handle error
         console.log(error);
       });
-    })
-    .catch((error) => {
-      // handle error
-      console.log(error);
-    });
     // this.suggestMixtape();
   }
 
@@ -422,13 +423,13 @@ class App extends React.Component {
 
     const { sideA, sideB } = this.state;
 
-    if (side === "A") {
+    if (side === 'A') {
       sideA.splice(index, 1);
       const newSideA = sideA;
       this.setState({
         sideA: newSideA,
       });
-    } else if (side === "B") {
+    } else if (side === 'B') {
       sideB.splice(index, 1);
       const newSideB = sideB;
       this.setState({
@@ -445,7 +446,7 @@ class App extends React.Component {
    */
   authenticateUser() {
     axios
-      .get("/user/")
+      .get('/user/')
       .then((response) => {
         if (response.data.verified) {
           this.setState({
@@ -465,7 +466,7 @@ class App extends React.Component {
    */
 
   logout() {
-    axios.get("/logout");
+    axios.get('/logout');
     this.setState({
       isAuthenticated: false,
     });
@@ -492,7 +493,7 @@ class App extends React.Component {
     } = this.state;
     return (
       <Router>
-        <div className="App">
+        <div className='App'>
           <Navigation
             logout={this.logout}
             isAuthenticated={isAuthenticated}
@@ -507,7 +508,6 @@ class App extends React.Component {
             onChange={this.onChange}
             onSearchChange={this.onSearchChange}
             onSearch={this.onSearch}
-            suggestMixtape={this.suggestMixtape}
             onResultClick={this.onResultClick}
             playing={playing}
             searchResults={searchResults}
