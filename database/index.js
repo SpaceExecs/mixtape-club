@@ -47,6 +47,7 @@ const playlistSchema = new mongoose.Schema({
   bTitles: String,
   tapeDeck: String,
   tapeLabel: String,
+  explicitContent: Boolean
 });
 playlistSchema.plugin(findOrCreate);
 playlistSchema.plugin(autoIncrement.plugin, "playlist");
@@ -109,6 +110,7 @@ const storePlaylist = (plDetails, callback) => {
     bTitles,
     tapeDeck,
     tapeLabel,
+    explicitContent
   } = plDetails;
   const playlistInfo = new Playlist({
     userId,
@@ -118,6 +120,7 @@ const storePlaylist = (plDetails, callback) => {
     bTitles,
     tapeDeck,
     tapeLabel,
+    explicitContent
   });
   playlistInfo.save((err) => {
     if (err) {

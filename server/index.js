@@ -206,15 +206,16 @@ app.post("/update", (req, res) => {
 
 app.post("/store", (req, res) => {
   // need to figure out how we are sending info to endpoint
-  const { userId, aSideLinks, bSideLinks, tapeDeck, tapeLabel } = req.body;
+  const { userId, aSideLinks, bSideLinks, tapeDeck, tapeLabel, explicitContent } = req.body;
   const playlistDetails = {
     userId,
     aSideLinks: JSON.stringify(aSideLinks),
     bSideLinks: JSON.stringify(bSideLinks),
     tapeDeck,
     tapeLabel,
+    explicitContent,
   };
-  // console.log(playlistDetails);
+  console.log(playlistDetails);
   db.storePlaylist(playlistDetails, (response) => {
     console.log('respose from db.storePlaylist in app.post/store', response);
     res.end("Playlist Stored");

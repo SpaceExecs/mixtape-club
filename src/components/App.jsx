@@ -65,6 +65,8 @@ class App extends React.Component {
       googleId: "FILL_ME_IN",
       tapeBackgroundColor: "#fff",
       queryParam: "",
+      explicitContent: false,
+      explicitSearch: false,
     };
 
 
@@ -165,7 +167,7 @@ class App extends React.Component {
    */
 
   onSearch() {
-    const { songTitle, songArtist } = this.state;
+    const { songTitle, songArtist, explicitSearch } = this.state;
     const query  = `${songTitle} ${songArtist}`;
     // console.log('THIS IS QUERY', query);
     axios
@@ -180,17 +182,25 @@ class App extends React.Component {
         axios.post("/contentWarning", { songTitle, songArtist })
         .then(( { data }) => {
           // console.log(songTitle, songArtist);
-          console.log(data);
-          console.log('results from content warning', data);
+          // console.log(data);
+          // console.log('results from content warning', data);
           if(data === true){
             Swal.fire({
               title: 'Content Warning',
-              text: "Search Results Have Been Marked By Community to Contain Explicit Lyrics",
+              text: "Search Results Have Been Marked By The Community To Contain Explicit Lyrics",
               icon: 'warning',
+              // imageUrl: "https://i.imgur.com/JkwhjZR.png",
+              // imageWidth: 400,
+              // imageHeight: 200,
+              imageAlt: 'parental guidance',
               confirmButtonColor: '#3085d6',
               confirmButtonText: 'Yes, I Understand'
+            }).then(() => {
+              this.setState({ explicitSearch: true });
             });
-          };
+          } else {
+            this.setState({ explicitSearch: false });
+          }
         });
       })
       .catch((err) => {
@@ -277,9 +287,10 @@ class App extends React.Component {
    * @param {object} song - object containing all the youTube data about the song.
    */
   onPassSongToSideA(song) {
-    const { sideA } = this.state;
+    const { sideA, explicitSearch, explicitContent } = this.state;
     if (sideA.length < 5) {
       this.setState((prevState) => ({ sideA: prevState.sideA.concat(song) }));
+      if(explicitSearch) { this.setState({ explicitContent: true }); }
     } else {
       alert(
         "Side A is full, try adding songs to side B or remove songs to make more space."
@@ -294,9 +305,10 @@ class App extends React.Component {
    * @param {object} song - object containing all the youTube data about the song.
    */
   onPassSongToSideB(song) {
-    const { sideB } = this.state;
+    const { sideB, explicitSearch, explicitContent } = this.state;
     if (sideB.length < 5) {
       this.setState((prevState) => ({ sideB: prevState.sideB.concat(song) }));
+      if(explicitSearch) { this.setState({ explicitContent: true }); }
     } else {
       alert(
         "Side B is full, try adding songs to side A or remove songs to make more space."
@@ -325,7 +337,7 @@ class App extends React.Component {
    * with friends.
    */
   onSavePlaylist() {
-    const { googleId, sideA, sideB, builderImage, tapeLabel } = this.state;
+    const { googleId, sideA, sideB, builderImage, tapeLabel, explicitContent } = this.state;
     console.log('this.state in onSavePlaylist', this.state);
     const { image, name } = builderImage;
     axios
@@ -335,6 +347,7 @@ class App extends React.Component {
         bSideLinks: sideB,
         tapeDeck: image,
         tapeLabel,
+        explicitContent,
       })
       .then((response) => {
         // handle success
