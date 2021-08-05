@@ -287,14 +287,28 @@ class App extends React.Component {
    * @param {object} song - object containing all the youTube data about the song.
    */
   onPassSongToSideA(song) {
-    const { sideA, explicitSearch, explicitContent } = this.state;
+    const { sideA, explicitSearch } = this.state;
+    let timerInterval;
     if (sideA.length < 5) {
       this.setState((prevState) => ({ sideA: prevState.sideA.concat(song) }));
       if(explicitSearch) { this.setState({ explicitContent: true }); }
     } else {
-      alert(
-        "Side A is full, try adding songs to side B or remove songs to make more space."
-      );
+      Swal.fire({
+        title: 'Flip The Tape!',
+        html: 'To Add More Tracks Flip Tape',
+        timer: 3500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector('b');
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      });
     }
   }
 
@@ -305,14 +319,28 @@ class App extends React.Component {
    * @param {object} song - object containing all the youTube data about the song.
    */
   onPassSongToSideB(song) {
-    const { sideB, explicitSearch, explicitContent } = this.state;
+    const { sideB, explicitSearch } = this.state;
+    let timerInterval;
     if (sideB.length < 5) {
       this.setState((prevState) => ({ sideB: prevState.sideB.concat(song) }));
       if(explicitSearch) { this.setState({ explicitContent: true }); }
     } else {
-      alert(
-        "Side B is full, try adding songs to side A or remove songs to make more space."
-      );
+      Swal.fire({
+        title: 'Flip The Tape!',
+        html: 'To Add More Tracks Flip Tape',
+        timer: 3500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading();
+          const b = Swal.getHtmlContainer().querySelector('b');
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft();
+          }, 100);
+        },
+        willClose: () => {
+          clearInterval(timerInterval);
+        }
+      });
     }
   }
 
