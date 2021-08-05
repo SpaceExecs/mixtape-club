@@ -10,6 +10,8 @@ module.exports = {
       CLIENT_ID: process.env.CLIENT_ID,
       CLIENT_SECRET: process.env.CLIENT_SECRET,
       YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+      ENVIRONMENT_DB: process.env.ENVIRONMENT_DB,
+      ENVIRONMENT_URL: process.env.ENVIRONMENT_URL,
     }
   },
     {
@@ -20,6 +22,8 @@ module.exports = {
         CLIENT_ID: process.env.CLIENT_ID,
         CLIENT_SECRET: process.env.CLIENT_SECRET,
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+        ENVIRONMENT_DB: process.env.ENVIRONMENT_DB,
+        ENVIRONMENT_URL: process.env.ENVIRONMENT_URL,
       }
   }],
 
@@ -35,6 +39,8 @@ module.exports = {
         CLIENT_ID: process.env.CLIENT_ID,
         CLIENT_SECRET: process.env.CLIENT_SECRET,
         YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+        ENVIRONMENT_DB: process.env.ENVIRONMENT_DB,
+        ENVIRONMENT_URL: process.env.ENVIRONMENT_URL,
       },
       ssh_options: "StrictHostKeyChecking=no",
       'pre-deploy-local': '',
@@ -45,3 +51,9 @@ module.exports = {
 };
 
 
+// ENVIRONMENT_DB = mongodb://localhost/mtc
+// ENVIRONMENT_URL = http://localhost:3000
+
+// http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000
+
+// mongodb+srv://mongo:mongo@mixtape.quyfz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority

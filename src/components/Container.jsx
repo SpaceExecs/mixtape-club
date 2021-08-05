@@ -19,6 +19,7 @@ function Container(props) {
     searchResults,
     onChange,
     onSearch,
+    // suggestMixtape,
     onSearchChange,
     onPlayVideo,
     onReady,
@@ -61,6 +62,7 @@ function Container(props) {
                 authenticateUser={authenticateUser}
                 onReady={onReady}
                 onSearch={onSearch}
+                // suggestMixtape={suggestMixtape}
                 onSearchChange={onSearchChange}
                 onChange={onChange}
                 onPauseVideo={onPauseVideo}

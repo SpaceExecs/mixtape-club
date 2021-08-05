@@ -7,8 +7,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth2").Strategy;
 const db = require("../database/index");
 const { lyricRoutes } = require("./routes/lyricRoutes");
-
-const { getRelatedVideos } = require('../server/helper');
+// const { getRelatedVideos } = require('./helper');
 /**
  * express required to aid in in handling request made to server
  * session required to aid with passport request for google authentication
@@ -57,18 +56,30 @@ passport.deserializeUser((obj, done) => {
  * passport using newly created instance of GoogleStrategy
  * db.findCreate called after to store information to DB.
  */
-const localEnvironment = "http://localhost:3000";
-const deployEnvironment = "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000";
-const localCallback = "http://localhost:3000/auth/google/callback";
-const deployCallback = "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback";
+// const localEnvironment = "http://localhost:3000";
+// const deployEnvironment = "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000";
+// const localCallback = "http://localhost:3000/auth/google/callback";
+// const deployCallback = "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback";
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.CLIENT_ID,
-      clientSecret: process.env.CLIENT_SECRET,
-      callbackURL: localCallback,
-      passReqToCallback: true,
+//  passport.use(new GoogleStrategy({
+//   clientID: process.env.CLIENT_ID,
+//   clientSecret: process.env.CLIENT_SECRET,
+//   callbackURL: 'http://localhost:3000/auth/google/callback',
+//   passReqToCallback: true,
+
+// passport.use(
+//   new GoogleStrategy(
+//     {
+//       clientID: process.env.CLIENT_ID,
+//       clientSecret: process.env.CLIENT_SECRET,
+//       callbackURL: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback",
+//       passReqToCallback: true,
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.CLIENT_ID,
+  clientSecret: process.env.CLIENT_SECRET,
+  callbackURL: `${process.env.ENVIRONMENT_URL}/auth/google/callback`,
+  passReqToCallback: true,
     },
     (req, token, tokenSecret, profile, done) => {
       db.findCreate(
@@ -96,15 +107,20 @@ app.get(
  * Get request used to redirect users based on success or failure of login
  */
 
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: `${localEnvironment}/login`,
-  }),
-  (req, res) => {
-    res.redirect(localEnvironment);
-  }
-);
+ app.get('/auth/google/callback',
+ passport.authenticate('google', { failureRedirect: `${process.env.ENVIRONMENT_URL}/login` }),
+ (req, res) => {
+   res.redirect(`${process.env.ENVIRONMENT_URL}/mixtape-player`);
+ });
+// app.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", {
+//     failureRedirect: "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login",
+//   }),
+//   (req, res) => {
+//     res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/");
+//   }
+// );
 
 /**
  * Get request handler used to retrieve users information from request sent to server
@@ -169,20 +185,34 @@ app.get("/", (req, res) => {
  * https://tylermcginnis.com/react-router-cannot-get-url-refresh/
  * Read article above for explanation
  */
-
-app.get("/*", (req, res) => {
-  if (req.path !== `${localEnvironment}/auth/google/callback`) {
-    if (req.path === `${localEnvironment}/create-mixtapes`) {
+ app.get('/*', (req, res) => {
+  if (req.path !== '/auth/google/callback') {
+    if (req.path === '/create-mixtapes') {
       if (!req.user) {
-        res.redirect(`${localEnvironment}/login`);
+        res.redirect(`${process.env.ENVIRONMENT_URL}/login`);
       }
-    } else if (req.path === "/") {
-      res.redirect(`${localEnvironment}/mixtape-player`);
+    } else if (req.path === '/') {
+      res.redirect(`${process.env.ENVIRONMENT_URL}/mixtape-player`);
     } else {
       res.sendFile(path.join(__dirname, '../dist/index.html'));
     }
   }
 });
+
+
+// app.get("/*", (req, res) => {
+//   if (req.path !== "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/auth/google/callback") {
+//     if (req.path === "http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/create-mixtapes") {
+//       if (!req.user) {
+//         res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/login");
+//       }
+//     } else if (req.path === "/") {
+//       res.redirect("http://ec2-3-137-198-67.us-east-2.compute.amazonaws.com:3000/mixtape-player");
+//     } else {
+//       res.sendFile(path.join(__dirname, "../dist/index.html"));
+//     }
+//   }
+// });
 
 /**
  * Post Request handler to aid in updating music player
@@ -311,6 +341,26 @@ app.post("/search", (req, res) => {
       console.log("Error searching youtube:", err);
       res.send(err);
     });
+});
+
+
+app.post('/suggested', (req, res) =>{
+  const {videoId} = req.body.selectedResult.id;
+  console.log('req.body from app.post/suggested', req.body.selectedResult.id.videoId);
+  const url = 'https://youtube.googleapis.com/youtube/v3/search?part=snippet';
+  const options = {
+    params: {
+      key: process.env.YOUTUBE_API_KEY,
+      q: videoId,
+      type: 'video',
+      videoEmbeddable: true,
+      maxResults: 8,
+    }
+  };
+  axios
+  .get(url, options)
+  .then(results => {console.log('results.data.items from app.post /suggested', results.data); return results;})
+  .catch((err) => console.log('ERROR from app.post/suggested', err));
 });
 
 app.use('/', lyricRoutes);
