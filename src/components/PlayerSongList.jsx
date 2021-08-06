@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 /** PlayerSongList component renders list of songs in the currently playing mixtape
  * at the mixtape-player route and is a child component of MixtapePlayer.
@@ -14,9 +14,9 @@ const PlayerSongList = (props) => {
     aSideLinks,
     bSideLinks,
     onFlip,
-    currentPlaylistId,
-    toggleLink,
-    onToggleLink,
+    // currentPlaylistId,
+    // toggleLink,
+    // onToggleLink,
   } = props;
 
   const [ listView, setListView ] = useState('side A');
@@ -118,8 +118,7 @@ const PlayerSongList = (props) => {
                   {aSideTitles[4]}{" "}
                 </li>
               </ul>
-            </div>
-            :
+            </div>            :
             <div
               // className="tab-pane fade"
               id="v-pills-profile"

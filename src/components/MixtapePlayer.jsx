@@ -11,6 +11,7 @@ import { library, config } from "@fortawesome/fontawesome-svg-core";
 
 import axios from "axios";
 import advisory from "../assets/img/parentalAdvisory.png";
+import bunny from "../assets/img/bunny.png";
 import UserMixtapesList from "./UserMixtapes.jsx";
 import SampleMixtape from "./SampleMixtape.jsx";
 import PlayerSongList from "./PlayerSongList.jsx";
@@ -125,7 +126,7 @@ class MixtapePlayer extends React.Component {
             tapeCover: data.response[0].tapeDeck,
             sidePlaying: aVideoArray,
             tapeTitle: data.response[0].tapeLabel,
-            // explicitContent
+            explicitContent: data.response[0].explicitContent
           });
           this.state.player.loadPlaylist({ playlist: this.state.sidePlaying });
         }
@@ -456,6 +457,7 @@ class MixtapePlayer extends React.Component {
           tapeCover: playlist.tapeDeck,
           sidePlaying: aVideoArray,
           tapeTitle: playlist.tapeLabel,
+          explicitContent: playlist.explicitContent
         });
         this.state.player.loadPlaylist({ playlist: aVideoArray });
       }
@@ -485,6 +487,7 @@ class MixtapePlayer extends React.Component {
       userName,
       currentPlaylistId,
       toggleLink,
+      explicitContent
     } = this.state;
 
     return (
@@ -501,7 +504,10 @@ class MixtapePlayer extends React.Component {
           className="row col-9 col-md-6 d-flex align-items-center player-ui mx-auto"
           style={this.divStyle}
         >
-          <img className='advisory' src={advisory} alt='parental guidance suggested'/>
+          { explicitContent ?
+          <img className='advisory' src={advisory} alt='parental guidance suggested'/> :
+          <img className='advisory' src={bunny} alt='pink bunnnny'/>
+          }
           <div className="row col-12 col-md-12">
             <FontAwesomeIcon
               className="col-3 ui-button"
