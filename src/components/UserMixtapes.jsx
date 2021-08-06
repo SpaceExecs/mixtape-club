@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 const UserMixtapesList = (props) => {
   const { searchResults, userPlaylists, userName, tapeRefresh } = props;
-
+  // console.log('userPlaylists', userPlaylists);
   return (
     <ul className="list-group col-12 mx-auto my-mixtape-list">
       <li className="list-group-item active  border border-info bg-info">

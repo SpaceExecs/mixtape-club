@@ -71,7 +71,7 @@ class App extends React.Component {
       explicitSearch: false,
     };
 
-    // this.suggestMixtape = this.suggestMixtape.bind(this);
+    this.suggestMixtape = this.suggestMixtape.bind(this);
     this.onSearch = this.onSearch.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -104,13 +104,13 @@ class App extends React.Component {
         googleId,
       })
       .then((response) => {
-        console.log('response from componentDidMount app.jsx', response);
+        // console.log('response from componentDidMount app.jsx', response);
       })
       .catch((err) => {
         console.error('Error searching:', err);
       });
-    console.log('location in componentDidMount', location);
-    // this.suggestMixtape();
+    // console.log('location in componentDidMount', location);
+    this.suggestMixtape();
   }
 
   /**
@@ -212,21 +212,20 @@ class App extends React.Component {
   }
 
   // eslint-disable-next-line react/sort-comp
-  // suggestMixtape() {
-  //   const { selectedResult } = this.state;
-  //   axios
-  //     .post('/suggested', { selectedResult })
-  //     .then((response) => {
-  //       console.log('response from suggestMixtape', response);
-  //       this.setState({
-  //         searchResults: response.data.items,
-  //         selectedResult: response.data.items[0],
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.error('Error searching:', err);
-  //     });
-  // }
+  suggestMixtape() {
+    axios
+      .get('/suggested')
+      .then((response) => {
+        // console.log('response from suggestMixtape', response);
+        this.setState({
+          searchResults: response.data.items,
+          selectedResult: response.data.items[0],
+        });
+      })
+      .catch((err) => {
+        console.error('Error searching:', err);
+      });
+  }
 
   /**
    * Function sets the state base on which tape image the user selects
@@ -359,7 +358,7 @@ class App extends React.Component {
   onSavePlaylist() {
     const { googleId, sideA, sideB, builderImage, tapeLabel, explicitContent } =
       this.state;
-    console.log('this.state in onSavePlaylist', this.state);
+    // console.log('this.state in onSavePlaylist', this.state);
     const { image, name } = builderImage;
     axios
       .post('/store', {
@@ -372,7 +371,7 @@ class App extends React.Component {
       })
       .then((response) => {
         // handle success
-        console.log('response.config.data', JSON.parse(response.config.data));
+        // console.log('response.config.data', JSON.parse(response.config.data));
         const newId = JSON.parse(response.config.data);
         // const {userId} = response.config.data;
         // eslint-disable-next-line prefer-destructuring
@@ -385,18 +384,33 @@ class App extends React.Component {
           .post('/suggested', {
             videoId,
           })
-          .then((response) => {
-            console.log('response /suggested videoId', response);
-            return response;
-          })
+          .then((response) =>
+            // console.log('response /suggested videoId', response);
+             response
+          )
           .catch((err) => console.log('ERROR /success', err));
+
+          axios.post('/saveSuggested', {
+            userId: googleId,
+            aSideLinks: sideA,
+            bSideLinks: sideB,
+            tapeDeck: image,
+            tapeLabel,
+            explicitContent,
+          })
+          .then((response) =>
+            // console.log('response /saveSuggested', response);
+             response
+          )
+          .catch((err) => console.log('ERROR /saveSuggested', err));
+
 
         axios
           .post('/getlink', {
             key,
           })
           .then((response) => {
-            console.log('I am response.data.id', response.data.id);
+            // console.log('I am response.data.id', response.data.id);
             this.setState({
               queryParam: response.data.id,
             });
@@ -508,6 +522,7 @@ class App extends React.Component {
             onChange={this.onChange}
             onSearchChange={this.onSearchChange}
             onSearch={this.onSearch}
+            suggestMixtape={this.suggestMixtape}
             onResultClick={this.onResultClick}
             playing={playing}
             searchResults={searchResults}

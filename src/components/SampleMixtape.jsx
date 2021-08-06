@@ -1,29 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const SampleMixtape = (props) => {
-  const { searchResults, userPlaylists, userName, tapeRefresh } = props;
-
+  const { searchResults, suggestedPlaylists, userName, suggestedRefresh } =
+    props;
+  console.log('suggestedPlaylists from sampleMixtape', suggestedPlaylists);
   return (
-    <ul className="list-group col-12 mx-auto my-mixtape-list">
-      <li className="list-group-item active  border border-info bg-info">
-        Suggested Mixtapes:
+    <ul className='list-group col-12 mx-auto my-mixtape-list'>
+      <li className='list-group-item active  border border-info bg-info'>
+        Suggested Mixtape:
       </li>
-      {userPlaylists.map((playlist, i) => (
+      {suggestedPlaylists.map((playlist, i) => (
+        console.log('playlist', playlist),
         <li
-          className="list-group-item"
+          className='list-group-item'
           key={i}
           id={playlist._id}
-          onClick={tapeRefresh}
+          onClick={suggestedRefresh}
         >
           <Link
             to={`/mixtape-player?id=${playlist._id}`}
-            className="navbar-brand  user-mixes"
+            className='navbar-brand  user-mixes'
           >
-            {playlist.tapeLabel} {'by Mixtape Club'}
+            Something just for you from Mixtape Club
           </Link>
         </li>
-        ))}
+      ))}
     </ul>
   );
 };
