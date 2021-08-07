@@ -51,7 +51,8 @@ class MixtapePlayer extends React.Component {
       userName: "",
       currentPlaylistId: "",
       toggleLink: false,
-      explicitContent: false
+      explicitContent: false,
+      isAuth: this.props.isAuth,
     };
 
     this.getUserPlaylists();
@@ -101,8 +102,6 @@ class MixtapePlayer extends React.Component {
       .then((response) => {
         const { data } = response;
 
-        console.log('THIS IS DATA', data);
-
         // aSideLyricArray: [],
         // aSideArtArray: [],
         // aSideLyricLinkArray: [],
@@ -119,7 +118,6 @@ class MixtapePlayer extends React.Component {
         const bLyricLinks = [];
         const aSide = JSON.parse(data.response[0].aSideLinks);
         const bSide = JSON.parse(data.response[0].bSideLinks);
-        console.log('aSide', aSide);
         this.setState({
           userPlaylists: data.response,
           userName: data.displayName,
@@ -240,9 +238,8 @@ class MixtapePlayer extends React.Component {
           id,
         })
         .then((response) => {
-          console.log('RESPONSE TO MIXTAPE PLAYER', response);
           if (response.data.bSide) {
-            const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
+            const { aSide, bSide, tapeDeck, tapeLabel } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
               aTitleArray.push(video.snippet.title);
@@ -548,6 +545,7 @@ class MixtapePlayer extends React.Component {
 
   render() {
     const {
+      isAuth,
       aSideLinks,
       bSideLinks,
       aSideTitles,
@@ -567,6 +565,9 @@ class MixtapePlayer extends React.Component {
       bSideArtArray,
       bSideLyricLinkArray,
     } = this.state;
+
+
+
 
     return (
       <div>
@@ -617,6 +618,7 @@ class MixtapePlayer extends React.Component {
         </div>
 
         <PlayerSongList
+          isAuth={isAuth}
           onFlip={this.onFlip}
           currentSong={currentSong}
           aSideLinks={aSideLinks}

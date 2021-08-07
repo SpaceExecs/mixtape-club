@@ -38,6 +38,7 @@ const PlayerSongList = (props) => {
   //   bSideArtArray,
   //   bSideLyricLinkArray);
 
+
   const matchDetails = (song) => {
     for(let i = 0; i < aSideLinks.length; i++){
       if(song === aSideLinks[i]){
@@ -55,18 +56,25 @@ const PlayerSongList = (props) => {
     }
   };
 
+
     useEffect(() => {
       matchDetails(currentSong);
     }, [JSON.stringify(currentSong)]);
 
   return (
     <div>
+      { lyrics !== undefined && lyrics.length ?
       <SongDetails
         className='songDetails'
         lyrics={lyrics}
         art={art}
         geniusLink={geniusLink}
-      />
+      /> :
+      <div>
+        <br />
+        <br />
+      </div>
+    }
       <div className="border border-info playlist-builder-player mx-auto shadow-sm p-3 mb-5 bg-white rounded">
         <div className="row">
           <div className="col-sm-4 col-md-2" style={{ marginTop: "1rem" }}>

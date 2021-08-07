@@ -17,6 +17,16 @@
   margin-top: 50px;;
 }
 
+.lyricImage {
+  height: 275;
+  width: 'auto';
+  margin-top: 2em;
+}
+
+.lineBreak {
+  margin-top: 1.5em;
+}
+
 /** Login view header styles **/
 
 .hero {

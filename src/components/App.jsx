@@ -1,7 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
 import React from "react";
-import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
@@ -403,7 +402,6 @@ class App extends React.Component {
         key,
       })
       .then((response) => {
-        console.log('I am response.data.id', response.data.id);
         this.setState({
           queryParam: response.data.id,
         });
