@@ -1,11 +1,10 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import axios from 'axios';
-import '../App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import axios from "axios";
+import "../App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2';
 
 import Container from './Container.jsx';
@@ -78,6 +77,7 @@ class App extends React.Component {
     this.onPlayVideo = this.onPlayVideo.bind(this);
     this.onPauseVideo = this.onPauseVideo.bind(this);
     this.onReady = this.onReady.bind(this);
+    this.getSongInfo = this.getSongInfo.bind(this);
 
     this.onSelectTapeImage = this.onSelectTapeImage.bind(this);
     this.onTapeLabelChange = this.onTapeLabelChange.bind(this);
@@ -178,48 +178,67 @@ class App extends React.Component {
         });
       })
       .then(() => {
-        axios
-          .post('/contentWarning', { songTitle, songArtist })
-          .then(({ data }) => {
-            if (data === true) {
-              Swal.fire({
-                title: 'Content Warning',
-                text: 'Search Results Have Been Marked By The Community To Contain Explicit Lyrics',
-                icon: 'warning',
-                // imageUrl: "https://i.imgur.com/JkwhjZR.png",
-                // imageWidth: 400,
-                // imageHeight: 200,
-                imageAlt: 'parental guidance',
-                confirmButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, I Understand',
-              }).then(() => {
-                this.setState({ explicitSearch: true });
-              });
-            } else {
-              this.setState({ explicitSearch: false });
-            }
-          });
+        axios.post("/contentWarning", { songTitle, songArtist })
+        .then(( { data }) => {
+          if(data === true){
+            Swal.fire({
+              title: 'Content Warning',
+              text: "Search Results Have Been Marked By The Community To Contain Explicit Lyrics",
+              icon: 'warning',
+              imageAlt: 'parental guidance',
+              confirmButtonColor: '#3085d6',
+              confirmButtonText: 'Yes, I Understand'
+            }).then(() => {
+              this.setState({ explicitSearch: true });
+            });
+          } else {
+            this.setState({ explicitSearch: false });
+          }
+        });
+      })
+      .catch((err) => {
+        console.error("Error searching:", err);
+      });
+  }
+
+
+
+
+
+
+  // function to retrieve lyric data from song.
+
+  getSongInfo(song){
+    const track = song;
+    const { songTitle, songArtist } = this.state;
+    return axios.post('/fetchDetails', { songTitle, songArtist })
+    .then(({ data }) => {
+      track.genLyrics = data.lyrics;
+      track.genArt = data.albumArt;
+      track.genUrl = data.url;
+      return track;
+    });
+  }
+
+
+  suggestMixtape() {
+    const { selectedResult } = this.state;
+    axios
+      .post("/suggested", { selectedResult })
+      .then((response) => {
+        console.log('response from suggestMixtape', response);
+        this.setState({
+          searchResults: response.data.items,
+          selectedResult: response.data.items[0],
+        });
       })
       .catch((err) => {
         console.error('Error searching:', err);
       });
   }
 
-  // eslint-disable-next-line react/sort-comp
-  // suggestMixtape() {
-  //   axios
-  //     .get('/suggested')
-  //     .then((response) => {
-  //       console.log('response line 213 suggestMixtape()', response);
-  //       this.setState({
-  //         searchResults: response.data.items,
-  //         selectedResult: response.data.items[0],
-  //       });
-  //     })
-  //     .catch((err) => {
-  //       console.error('Error searching:', err);
-  //     });
-  // }
+
+
 
   /**
    * Function sets the state base on which tape image the user selects
@@ -269,7 +288,9 @@ class App extends React.Component {
    */
   onPassSongToSideA(song) {
     const { sideA, explicitSearch } = this.state;
-    let timerInterval;
+    this.getSongInfo(song)
+    .then((song) => {
+      let timerInterval;
     if (sideA.length < 5) {
       this.setState((prevState) => ({ sideA: prevState.sideA.concat(song) }));
       if (explicitSearch) {
@@ -293,6 +314,7 @@ class App extends React.Component {
         },
       });
     }
+    });
   }
 
   /**
@@ -303,6 +325,8 @@ class App extends React.Component {
    */
   onPassSongToSideB(song) {
     const { sideB, explicitSearch } = this.state;
+    this.getSongInfo(song)
+    .then((song) => {
     let timerInterval;
     if (sideB.length < 5) {
       this.setState((prevState) => ({ sideB: prevState.sideB.concat(song) }));
@@ -327,7 +351,9 @@ class App extends React.Component {
         },
       });
     }
+  });
   }
+
 
   /**
    * Function makes the tapeImageSelector disappear from the page

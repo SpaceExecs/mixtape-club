@@ -238,24 +238,7 @@ const getAllPlaylists = (filter, callback) => {
       console.log("error", err);
       callback(err);
     } else {
-      callback(null, data);
-    }
-  });
-};
-
-/**
- * getAllSuggested is designed to retrieve all suggested playlists for a particular user
- * information is then passed to mixtape-player to present info to user after login
- * @param {*} filter {object} filter to sort through column names in database
- * @param {*} callback used to give information back to function calling getAllPlaylists
- */
-
- const getAllSuggested = (filter, callback) => {
-  Suggested.find(filter, (err, data) => {
-    if (err) {
-      console.log("error", err);
-      callback(err);
-    } else {
+      // console.log("data", data);
       callback(null, data);
     }
   });
@@ -288,4 +271,4 @@ module.exports.updatePlaylist = updatePlaylist;
 module.exports.retrievePlaylist = retrievePlaylist;
 module.exports.retrieveSuggested = retrieveSuggested;
 module.exports.getAllPlaylists = getAllPlaylists;
-module.exports.getAllSuggested = getAllSuggested;
+// module.exports.getAllSuggested = getAllSuggested;
