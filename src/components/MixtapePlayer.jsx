@@ -104,7 +104,6 @@ class MixtapePlayer extends React.Component {
       })
       .then((response) => {
         const { data } = response;
-        console.log('LINE 107', response);
         const aVideoArray = [];
         const bVideoArray = [];
         const aTitleArray = [];
@@ -164,7 +163,6 @@ class MixtapePlayer extends React.Component {
 
   getSuggestedMixtapes() {
     const { googleId } = this.state;
-    console.log('GET SUGGESTED MIXTAPES CALLED');
     axios
       .get("/suggestedPlaylists", {
         googleId,
@@ -569,7 +567,6 @@ class MixtapePlayer extends React.Component {
 
   suggestedRefresh(event) {
     // location.reload()
-    // console.log('!!!!!!!!!!');
     // currentSong
     // currentPlaylistId
     // this.loadSuggested();
@@ -578,7 +575,6 @@ class MixtapePlayer extends React.Component {
         playlist._id === Number(event.currentTarget.id) &&
         playlist.aSideLinks !== undefined
         ) {
-          console.log("aVideoArray", aVideoArray);
           const aVideoArray = [];
           const bVideoArray = [];
           const aTitleArray = [];
@@ -621,7 +617,6 @@ class MixtapePlayer extends React.Component {
           tapeTitle: playlist.tapeLabel,
           explicitContent: playlist.explicitContent
         });
-        console.log('this.state.aVidoeArray', this.state.aSideLinks);
         this.state.player.loadPlaylist({ playlist: aVideoArray });
       }
     });
@@ -661,8 +656,6 @@ class MixtapePlayer extends React.Component {
       bSideGenArtArray,
       bSideLyricLinkArray,
     } = this.state;
-
-    console.log('LINE 612', suggestedPlaylists);
 
 
     return (

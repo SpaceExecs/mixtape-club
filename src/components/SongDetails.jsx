@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SongDetails = ({
   lyrics,
-  geniusArt,
+  // geniusArt,
   geniusLink }) => {
   const [visible, setVisible] = useState(false);
 
