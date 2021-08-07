@@ -110,7 +110,6 @@ class App extends React.Component {
       .catch((err) => {
         console.error("Error searching:", err);
       });
-    console.log("location in componentDidMount", location);
     this.suggestMixtape();
   }
 
