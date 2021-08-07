@@ -86,7 +86,6 @@ passport.use(new GoogleStrategy({
         { googleId: profile.id, displayName: profile.displayName },
         (err, user) => done(err, user)
       );
-      // console.log(profile);
       process.nextTick(() => done(null, profile));
     }
   )
@@ -146,7 +145,6 @@ app.get("/logout", (req, res) => {
 
 app.get("/getUser", (req, res) => {
   db.findCreate(req.query, (info, response) => {
-    // console.log('response from app.get /getUser', response);
     res.send(response);
   });
 });
@@ -160,11 +158,8 @@ app.get("/getUser", (req, res) => {
 app.get("/userPlaylists", (req, res) => {
   if (req.user) {
     const { id, displayName } = req.user;
-    // console.log('displayName from app.get /userPlaylists', displayName);
     db.getAllPlaylists({ userId: id }, (info, response) => {
-      // console.log('response from db.getAllPlaylists in app.get/userPlaylists', response);
       const data = { response, displayName };
-      // console.log('data from get/userPlaylists', data);
       res.send(data);
     });
   }
@@ -172,26 +167,16 @@ app.get("/userPlaylists", (req, res) => {
 
 
 app.get("/suggestedPlaylists", (req, res) => {
-  // const { key } = req.body;
   const { id, displayName } = req.user;
-  // console.log('req.body app.get/suggestedPlaylists', id);
   const filter = { userId: id };
   db.retrieveSuggested(filter, (response) => {
     if (response === null) {
-      // res.end("No Results Found");
+      res.end("No Results Found");
     } else {
-      // console.log('response from app.get/suggestedPlaylists',response);
       const data = { response, displayName };
       res.send(data);
     };
   });
-  // db.retrieveSuggested({ userId: id }, (info, response) => {
-  //   console.log('response from db.retrieveSuggested in app.get/suggestedPlaylists', response);
-  //   const data = { response, displayName };
-  //   console.log('data from get/userPlaylists', data);
-  //   res.send(data);
-  //   });
-  // }
 });
 
 
@@ -249,7 +234,6 @@ app.post("/update", (req, res) => {
   const filter = { userId: "CHANGE THE FILTER SOMEHOW FILL_ME_IN" };
   const update = { tapeDeck: "FILL_ME_IN" };
   db.updatePlaylist(filter, update, (response) => {
-    // console.log('response from app.post /update', response);
     res.end("Playlist Updated");
   });
 });
@@ -269,9 +253,7 @@ app.post("/store", (req, res) => {
     tapeLabel,
     explicitContent,
   };
-  // console.log(playlistDetails);
   db.storePlaylist(playlistDetails, (response) => {
-    // console.log('respose from db.storePlaylist in app.post/store', response);
     res.end("Playlist Stored");
   });
 });
@@ -289,7 +271,6 @@ app.post("/getLink", (req, res) => {
     if (response === null) {
       res.end("No Results Found");
     } else {
-      // console.log('response._id in app.post/getLink',response._id);
 
       res.send({ id: response._id });
     }
@@ -304,7 +285,6 @@ app.post("/getLink", (req, res) => {
 app.post("/mixtape-player/", (req, res) => {
   // need to do this dynamically
   const { id } = req.body;
-  // console.log('id from app.post /mixtape-player/', id);
   const filter = { _id: id };
 
   db.retrievePlaylist(filter, (response) => {
@@ -335,35 +315,6 @@ app.post("/mixtape-player/", (req, res) => {
       }
     }
   });
-  // db.retrieveSuggested(filter, (response) =>{
-  //   if (response === null) {
-  //     res.end("No Results Found");
-  //   } else {
-  //     const { aSideLinks, bSideLinks, tapeDeck, tapeLabel, userId } = response;
-  //     console.log('response from db.retrieveSuggested', response);
-  //     const aSide = JSON.parse(aSideLinks);
-  //     let bSide;
-  //     if (bSideLinks) {
-  //       bSide = JSON.parse(bSideLinks);
-  //       const data = {
-  //         aSide,
-  //         bSide,
-  //         tapeDeck,
-  //         tapeLabel,
-  //         userId,
-  //       };
-  //       res.send(data);
-  //     } else {
-  //       const data = {
-  //         aSide,
-  //         tapeDeck,
-  //         tapeLabel,
-  //         userId,
-  //       };
-  //       res.send(data);
-  //     }
-  //   }
-  // });
 });
 
 /**
@@ -386,18 +337,16 @@ app.post("/search", (req, res) => {
   axios
     .get(url, options)
     .then((response) => {
-      // console.log('response from app.post/search', response.data.items);
       res.send(response.data);
     })
     .catch((err) => {
-      // console.log("Error searching youtube:", err);
+      console.log("Error searching youtube:", err);
       res.send(err);
     });
 });
 
 
 app.post('/suggested', (req, res) =>{
-  console.log('req.body', req.body.videoId);
   getRelatedVideos(req.body)
   .then((data) => {{console.log('data', data);}; res.send(data);}).catch((err) =>{
     console.log(err);
@@ -416,9 +365,7 @@ app.post("/saveSuggested", (req, res) => {
     tapeLabel,
     explicitContent,
   };
-  // console.log(playlistDetails);
   db.storeSuggested(playlistDetails, (response) => {
-    // console.log('respose from db.storePlaylist in app.post/store', response);
     res.end("Playlist Stored");
   });
 });

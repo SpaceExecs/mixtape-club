@@ -16,11 +16,6 @@ const getRelatedVideos = ({videoId}) => {
       })
       .catch((err) => {console.log('err helper.js line 16', err); reject(err);});
   });
-  // return axios(options)
-  // .then((response) => console.log('response from ', response))
-  // .catch((error) =>{
-  //   console.log(error);
-  // });
 };
 
 module.exports.getRelatedVideos = getRelatedVideos;

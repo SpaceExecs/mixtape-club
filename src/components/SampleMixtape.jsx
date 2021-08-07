@@ -2,22 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const SampleMixtape = (props) => {
-  const { searchResults, suggestedPlaylists, userName, suggestedRefresh } =
+  const { searchResults, suggestedPlaylists, userName, tapeRefresh } =
     props;
-  console.log('suggestedPlaylists from sampleMixtape', suggestedPlaylists);
+  // console.log('suggestedPlaylists from sampleMixtape', suggestedPlaylists);
   return (
     <ul className='list-group col-12 mx-auto my-mixtape-list'>
       <li className='list-group-item active  border border-info bg-info'>
         Suggested Mixtape:
       </li>
       {suggestedPlaylists.map((playlist, i) => (
-        console.log('playlist', playlist),
         <li
           className='list-group-item'
           key={i}
           id={playlist._id}
-          onClick={suggestedRefresh}
-        >
+          onClick={tapeRefresh}
+          >
           <Link
             to={`/mixtape-player?id=${playlist._id}`}
             className='navbar-brand  user-mixes'
