@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const SongDetails = ({
   lyrics,
-  // art,
+  // geniusArt,
   geniusLink }) => {
   const [visible, setVisible] = useState(false);
 
@@ -25,7 +25,7 @@ const SongDetails = ({
       <div>
         {/* <img
           style={{height: 275, width: 'auto', marginTop: '2em'}}
-          src={art}
+          src={geniusArt}
           alt='album art' /> */}
         <div>{ lyricsArray.map(line => {
           if(line[0] === '[') {
