@@ -83,7 +83,7 @@ class MixtapePlayer extends React.Component {
   componentWillMount() {
     this.loadShared();
     if (this.state.googleId !== null) {
-      this.getUserPlaylists();
+      // this.getUserPlaylists();
       // this.getSuggestedMixtapes();
     }
   }
