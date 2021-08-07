@@ -169,11 +169,12 @@ app.get("/userPlaylists", (req, res) => {
 app.get("/suggestedPlaylists", (req, res) => {
   const { id, displayName } = req.user;
   const filter = { userId: id };
-  db.retrieveSuggested(filter, (response) => {
+  db.retrieveSuggested(filter, (err, response) => {
     if (response === null) {
       res.end("No Results Found");
     } else {
       const data = { response, displayName };
+      // console.log('suggestedsss', data);
       res.send(data);
     };
   });

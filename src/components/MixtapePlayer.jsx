@@ -69,7 +69,7 @@ class MixtapePlayer extends React.Component {
     this.checkVid = this.checkVid.bind(this);
     this.tapeRefresh = this.tapeRefresh.bind(this);
     this.onToggleShareLink = this.onToggleShareLink.bind(this);
-    // this.suggestedRefresh = this.suggestedRefresh.bind(this);
+    this.suggestedRefresh = this.suggestedRefresh.bind(this);
 
     this.divStyle = {
       borderRadius: "5px",
@@ -83,7 +83,7 @@ class MixtapePlayer extends React.Component {
   componentWillMount() {
     this.loadShared();
     if (this.state.googleId !== null) {
-      // this.getUserPlaylists();
+      this.getUserPlaylists();
       // this.getSuggestedMixtapes();
     }
   }
@@ -104,6 +104,7 @@ class MixtapePlayer extends React.Component {
       })
       .then((response) => {
         const { data } = response;
+        console.log('LINE 107', response);
         const aVideoArray = [];
         const bVideoArray = [];
         const aTitleArray = [];
@@ -163,24 +164,23 @@ class MixtapePlayer extends React.Component {
 
   getSuggestedMixtapes() {
     const { googleId } = this.state;
-
+    console.log('GET SUGGESTED MIXTAPES CALLED');
     axios
       .get("/suggestedPlaylists", {
         googleId,
       })
       .then((response) => {
         const { data } = response;
-        console.log('response line 145 getSuggestedMixtapes()', response);
+        this.setState({
+          suggestedPlaylists: data.response,
+          userName: data.displayName,
+        });
         const aVideoArray = [];
         const bVideoArray = [];
         const aTitleArray = [];
         const bTitleArray = [];
         const aSide = JSON.parse(data.response.aSideLinks);
         const bSide = JSON.parse(data.response.bSideLinks);
-        this.setState({
-          suggestedPlaylists: aSide,
-          userName: data.displayName,
-        });
         if (!this.state.currentPlaylistId) {
           aSide.forEach((video) => {
             aVideoArray.push(video.id.videoId);
@@ -191,7 +191,7 @@ class MixtapePlayer extends React.Component {
             bTitleArray.push(video.snippet.title);
           });
           this.setState({
-            currentPlaylistId: data.response._id,
+            currentPlaylistId: data.response[0]._id,
             aSideLinks: aVideoArray,
             bSideLinks: bVideoArray,
             aSideTitles: aTitleArray,
@@ -567,8 +567,8 @@ class MixtapePlayer extends React.Component {
           sidePlaying: aVideoArray,
           tapeTitle: playlist.tapeLabel,
         });
-        console.log('this.state.aVidoeArray', this.state.aVideoArray);
-        this.state.player.loadPlaylist({ playlist: suggestedPlaylists });
+        console.log('this.state.aVidoeArray', this.state.aSideLinks);
+        this.state.player.loadPlaylist({ playlist: aVideoArray });
       }
     });
   };
@@ -608,7 +608,7 @@ class MixtapePlayer extends React.Component {
       bSideLyricLinkArray,
     } = this.state;
 
-
+    console.log('LINE 612', suggestedPlaylists);
 
 
     return (
@@ -686,7 +686,7 @@ class MixtapePlayer extends React.Component {
         <SampleMixtape
           userName={userName}
           suggestedPlaylists={suggestedPlaylists}
-          tapeRefresh={this.tapeRefresh}
+          suggestedRefresh={this.suggestedRefresh}
         />
       </div>
 

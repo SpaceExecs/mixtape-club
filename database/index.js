@@ -216,11 +216,11 @@ const retrievePlaylist = (filter, callback) => {
  */
 
 const retrieveSuggested = (filter, callback) => {
-  Suggested.findOne(filter, (err, data) => {
+  Suggested.find(filter, (err, data) => {
     if (err) {
       callback(err);
     } else {
-      callback(data);
+      callback(null, data);
     }
   });
 };
