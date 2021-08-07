@@ -20,16 +20,16 @@ const PlayerSongList = (props) => {
     // toggleLink,
     // onToggleLink,
     aSideLyricArray,
-    aSideArtArray,
+    aSideGenArtArray,
     aSideLyricLinkArray,
     bSideLyricArray,
-    bSideArtArray,
+    bSideGenArtArray,
     bSideLyricLinkArray,
   } = props;
 
   const [ listView, setListView ] = useState('side A');
   const [lyrics, setLyrics] = useState('');
-  const [art, setArt] = useState('');
+  const [geniusArt, setGeniusArt] = useState('');
   const [geniusLink, setGeniusLink] = useState('');
   // console.log(aSideLyricArray);
   // console.log( aSideArtArray,
@@ -43,14 +43,14 @@ const PlayerSongList = (props) => {
     for(let i = 0; i < aSideLinks.length; i++){
       if(song === aSideLinks[i]){
         setLyrics(aSideLyricArray[i]);
-        setArt(aSideArtArray[i]);
+        setGeniusArt(aSideGenArtArray[i]);
         setGeniusLink(aSideLyricLinkArray[i]);
       }
     }
     for(let i = 0; i < bSideLinks.length; i++){
       if(song === bSideLinks[i]){
         setLyrics(bSideLyricArray[i]);
-        setArt(bSideArtArray[i]);
+        setGeniusArt(bSideGenArtArray[i]);
         setGeniusLink(bSideLyricLinkArray[i]);
       }
     }
@@ -67,7 +67,7 @@ const PlayerSongList = (props) => {
       <SongDetails
         className='songDetails'
         lyrics={lyrics}
-        art={art}
+        geniusArt={geniusArt}
         geniusLink={geniusLink}
       /> :
       <div>
