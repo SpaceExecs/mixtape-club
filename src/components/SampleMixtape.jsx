@@ -12,7 +12,7 @@ const SampleMixtape = (props) => {
   return (
     <ul className='list-group col-12 mx-auto my-mixtape-list'>
       <li className='list-group-item active  border border-info bg-info'>
-        Suggested Mixtape:
+        Suggested Mixtapes:
       </li>
       {suggestedPlaylists.map((playlist, i) => (
         <li

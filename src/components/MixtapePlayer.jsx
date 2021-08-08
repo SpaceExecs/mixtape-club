@@ -259,14 +259,14 @@ class MixtapePlayer extends React.Component {
             const { aSide, bSide, tapeDeck, tapeLabel } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
-              aTitleArray.push(video.snippet.title);
+              aTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
               aLyricArray.push(video.genLyrics);
               aGenArtArray.push(video.genArt);
               aLyricLinks.push(video.genUrl);
             });
             bSide.forEach((video) => {
               bVideoArray.push(video.id.videoId);
-              bTitleArray.push(video.snippet.title);
+              bTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
               bLyricArray.push(video.genLyrics);
               bGenArtArray.push(video.genArt);
               bLyricLinks.push(video.genUrl);
@@ -345,14 +345,14 @@ class MixtapePlayer extends React.Component {
             const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
             aSide.forEach((video) => {
               aVideoArray.push(video.id.videoId);
-              aTitleArray.push(video.snippet.title);
+              aTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
               aLyricArray.push(video.genLyrics);
               aGenArtArray.push(video.genArt);
               aLyricLinks.push(video.genUrl);
             });
             bSide.forEach((video) => {
               bVideoArray.push(video.id.videoId);
-              bTitleArray.push(video.snippet.title);
+              bTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
               bLyricArray.push(video.genLyrics);
               bGenArtArray.push(video.genArt);
               bLyricLinks.push(video.genUrl);
@@ -534,14 +534,14 @@ class MixtapePlayer extends React.Component {
         const bSideLinks = JSON.parse(playlist.bSideLinks);
         aSideLinks.forEach((video) => {
           aVideoArray.push(video.id.videoId);
-          aTitleArray.push(video.snippet.title);
+          aTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
           aLyricArray.push(video.genLyrics);
           aGenArtArray.push(video.genArt);
           aLyricLinks.push(video.genUrl);
         });
         bSideLinks.forEach((video) => {
           bVideoArray.push(video.id.videoId);
-          bTitleArray.push(video.snippet.title);
+          bTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
           bLyricArray.push(video.genLyrics);
           bGenArtArray.push(video.genArt);
           bLyricLinks.push(video.genUrl);
@@ -591,14 +591,14 @@ class MixtapePlayer extends React.Component {
         const bSideLinks = JSON.parse(playlist.bSideLinks);
         aSideLinks.forEach((video) => {
           aVideoArray.push(video.id.videoId);
-          aTitleArray.push(video.snippet.title);
+          aTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
           aLyricArray.push(video.genLyrics);
           aGenArtArray.push(video.genArt);
           aLyricLinks.push(video.genUrl);
         });
         bSideLinks.forEach((video) => {
           bVideoArray.push(video.id.videoId);
-          bTitleArray.push(video.snippet.title);
+          bTitleArray.push(video.snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"'));
           bLyricArray.push(video.genLyrics);
           bGenArtArray.push(video.genArt);
           bLyricLinks.push(video.genUrl);
