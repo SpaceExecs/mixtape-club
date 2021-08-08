@@ -242,7 +242,9 @@ const PlayerSongList = (props) => {
             >
               Flip Tape
             </button>
+            <div className="shareMixtape">
             Share Mixtape
+            </div>
             <div
               className="fb-share-button"
               data-href="http://localhost:3000"
