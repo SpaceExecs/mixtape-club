@@ -203,7 +203,7 @@ app.get("/", (req, res) => {
       }
     } else if (req.path === '/') {
       res.redirect(`${process.env.ENVIRONMENT_URL}/mixtape-player`);
-    } else {
+    } else if(req.path !== '/suggested') {
       res.sendFile(path.join(__dirname, '../dist/index.html'));
     }
   }
@@ -349,10 +349,16 @@ app.post("/search", (req, res) => {
 
 app.post('/suggested', (req, res) =>{
   getRelatedVideos(req.body)
-  .then((data) => {{console.log('data', data);}; res.send(data);}).catch((err) =>{
+  .then((data) => {{console.log('data', data);}; res.status(200).send(data);}).catch((err) =>{
     console.log(err);
+    res.sendStatus(500);
   });
+});
 
+
+app.get('/suggested', (req, res) =>{
+  console.log('req.body line 360 app.get/suggested',req.body);
+  res.send(req.body);
 });
 
 app.post("/saveSuggested", (req, res) => {
