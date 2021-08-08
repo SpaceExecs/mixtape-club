@@ -199,6 +199,7 @@ class App extends React.Component {
       .catch((err) => {
         console.error("Error searching:", err);
       });
+      // this.suggestMixtape();
   }
 
 
@@ -221,21 +222,21 @@ class App extends React.Component {
   }
 
 
-  suggestMixtape() {
-    const { selectedResult } = this.state;
-    axios
-      .post("/suggested", { selectedResult })
-      .then((response) => {
-        console.log('response from suggestMixtape', response);
-        this.setState({
-          searchResults: response.data.items,
-          selectedResult: response.data.items[0],
-        });
-      })
-      .catch((err) => {
-        console.error('Error searching:', err);
-      });
-  }
+  // suggestMixtape() {
+  //   const { selectedResult } = this.state;
+  //   return axios
+  //     .get("/suggested", { selectedResult })
+  //     .then((response) => {
+  //       console.log('response from suggestMixtape', response);
+  //       this.setState({
+  //         searchResults: response.data.items,
+  //         selectedResult: response.data.items[0],
+  //       });
+  //     })
+  //     .catch((err) => {
+  //       console.error('Error searching:', err);
+  //     });
+  // }
 
 
 

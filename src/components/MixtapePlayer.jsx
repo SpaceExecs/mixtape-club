@@ -1,23 +1,23 @@
-import React from "react";
-import YouTube from "react-youtube";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import YouTube from 'react-youtube';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
   faPause,
   faForward,
   faBackward,
-} from "@fortawesome/free-solid-svg-icons";
-import { library, config } from "@fortawesome/fontawesome-svg-core";
+} from '@fortawesome/free-solid-svg-icons';
+import { library, config } from '@fortawesome/fontawesome-svg-core';
 
-import axios from "axios";
-import advisory from "../assets/img/parentalAdvisory.png";
-import bunny from "../assets/img/bunny.png";
-import UserMixtapesList from "./UserMixtapes.jsx";
-import SampleMixtape from "./SampleMixtape.jsx";
-import PlayerSongList from "./PlayerSongList.jsx";
-import TapeCoverImage from "./TapeCoverImage.jsx";
+import axios from 'axios';
+import advisory from '../assets/img/parentalAdvisory.png';
+import bunny from '../assets/img/bunny.png';
+import UserMixtapesList from './UserMixtapes.jsx';
+import SampleMixtape from './SampleMixtape.jsx';
+import PlayerSongList from './PlayerSongList.jsx';
+import TapeCoverImage from './TapeCoverImage.jsx';
 
-import LisaFrankenstein from "../assets/img/tapes/lisa-frankenstein-tape.gif";
+import LisaFrankenstein from '../assets/img/tapes/lisa-frankenstein-tape.gif';
 
 /** MixtapePlayer component is stateful and renders the entire mixtape-player route with it's child
  * componenets. It is a child component of Container.  Mixtape player also stores information about a
@@ -30,8 +30,8 @@ class MixtapePlayer extends React.Component {
     this.state = {
       player: null,
       playing: false,
-      aSideLinks: ["fi33-cITS0s"],
-      bSideLinks: ["H1Zm6E6Sy4Y"],
+      aSideLinks: ['fi33-cITS0s'],
+      bSideLinks: ['H1Zm6E6Sy4Y'],
       aSideLyricArray: [],
       aSideGenArtArray: [],
       aSideLyricLinkArray: [],
@@ -40,20 +40,21 @@ class MixtapePlayer extends React.Component {
       bSideLyricLinkArray: [],
       interval: null,
       playListId: null || this.props.location,
-      aSideTitles: ["Login to start making mixtapes of your own!"],
-      bSideTitles: ["Login to start making mixtapes of your own!"],
+      aSideTitles: ['Login to start making mixtapes of your own!'],
+      bSideTitles: ['Login to start making mixtapes of your own!'],
       tapeCover: LisaFrankenstein,
-      sidePlaying: ["fi33-cITS0s"],
+      sidePlaying: ['fi33-cITS0s'],
       googleId: null || this.props.googleId,
       userPlaylists: [],
       suggestedPlaylists: [],
-      tapeTitle: "Operation Sparkle",
-      currentSong: "",
-      userName: "",
-      currentPlaylistId: "",
+      tapeTitle: 'Operation Sparkle',
+      currentSong: '',
+      userName: '',
+      currentPlaylistId: '',
       toggleLink: false,
       explicitContent: false,
       isAuth: this.props.isAuth,
+      showSample: false,
     };
 
     this.getUserPlaylists();
@@ -70,13 +71,14 @@ class MixtapePlayer extends React.Component {
     this.tapeRefresh = this.tapeRefresh.bind(this);
     this.onToggleShareLink = this.onToggleShareLink.bind(this);
     this.suggestedRefresh = this.suggestedRefresh.bind(this);
+    this.handleToggleClick = this.handleToggleClick.bind(this);
 
     this.divStyle = {
-      borderRadius: "5px",
-      marginTop: "-360px",
+      borderRadius: '5px',
+      marginTop: '-360px',
     };
     this.iconStyle = {
-      margin: "3% 0",
+      margin: '3% 0',
     };
   }
 
@@ -84,7 +86,7 @@ class MixtapePlayer extends React.Component {
     this.loadShared();
     if (this.state.googleId !== null) {
       this.getUserPlaylists();
-      // this.getSuggestedMixtapes();
+      this.getSuggestedMixtapes();
     }
   }
 
@@ -99,7 +101,7 @@ class MixtapePlayer extends React.Component {
     const { googleId } = this.state;
 
     axios
-      .get("/userPlaylists", {
+      .get('/userPlaylists', {
         googleId,
       })
       .then((response) => {
@@ -150,25 +152,25 @@ class MixtapePlayer extends React.Component {
             tapeCover: data.response[0].tapeDeck,
             sidePlaying: aVideoArray,
             tapeTitle: data.response[0].tapeLabel,
-            explicitContent: data.response[0].explicitContent
+            explicitContent: data.response[0].explicitContent,
           });
           this.state.player.loadPlaylist({ playlist: this.state.sidePlaying });
         }
       })
       .catch((err) => {
-        console.error("Error searching:", err);
+        console.error('Error searching:', err);
       });
   }
-
 
   getSuggestedMixtapes() {
     const { googleId } = this.state;
     axios
-      .get("/suggestedPlaylists", {
+      .get('/suggestedPlaylists', {
         googleId,
       })
       .then((response) => {
         const { data } = response;
+        console.log('data line 174', data);
         this.setState({
           suggestedPlaylists: data.response,
           userName: data.displayName,
@@ -221,7 +223,7 @@ class MixtapePlayer extends React.Component {
         }
       })
       .catch((err) => {
-        console.error("Error searching:", err);
+        console.error('Error searching: getSuggestedMixtapes line 206', err);
       });
   }
 
@@ -249,7 +251,7 @@ class MixtapePlayer extends React.Component {
 
       const id = search.slice(4);
       axios
-        .post("/mixtape-player", {
+        .post('/mixtape-player', {
           id,
         })
         .then((response) => {
@@ -283,7 +285,7 @@ class MixtapePlayer extends React.Component {
               tapeCover: tapeDeck,
               sidePlaying: aVideoArray,
               tapeTitle: tapeLabel,
-              explicitContent: response.data[0].explicitContent
+              explicitContent: response.data[0].explicitContent,
             });
           } else {
             const { aSide, tapeDeck, tapeLabel, userId } = response.data;
@@ -303,7 +305,7 @@ class MixtapePlayer extends React.Component {
               aSideLyricArray: aLyricArray,
               aSideGenArtArray: aGenArtArray,
               aSideLyricLinkArray: aLyricLinks,
-              explicitContent: response.data[0].explicitContent
+              explicitContent: response.data[0].explicitContent,
             });
           }
         })
@@ -312,7 +314,7 @@ class MixtapePlayer extends React.Component {
           console.log(error);
         });
     }
-    this.getSuggestedMixtapes();
+    // this.getSuggestedMixtapes();
   }
 
   loadSuggested() {
@@ -335,7 +337,7 @@ class MixtapePlayer extends React.Component {
 
       const id = search.slice(4);
       axios
-        .post("/suggestedPlaylists", {
+        .post('/suggestedPlaylists', {
           id,
         })
         .then((response) => {
@@ -379,7 +381,7 @@ class MixtapePlayer extends React.Component {
               aSideLyricArray: aLyricArray,
               aSideGenArtArray: aGenArtArray,
               aSideLyricLinkArray: aLyricLinks,
-              explicitContent: response.data[0].explicitContent
+              explicitContent: response.data[0].explicitContent,
             });
           }
         })
@@ -475,7 +477,7 @@ class MixtapePlayer extends React.Component {
   checkVid(event) {
     if (event.data === 1) {
       let urlId = this.state.player.getVideoUrl();
-      urlId = urlId.replace("https://www.youtube.com/watch?v=", "");
+      urlId = urlId.replace('https://www.youtube.com/watch?v=', '');
 
       if (this.state.currentSong !== urlId) {
         this.setState({
@@ -558,7 +560,7 @@ class MixtapePlayer extends React.Component {
           tapeCover: playlist.tapeDeck,
           sidePlaying: aVideoArray,
           tapeTitle: playlist.tapeLabel,
-          explicitContent: playlist.explicitContent
+          explicitContent: playlist.explicitContent,
         });
         this.state.player.loadPlaylist({ playlist: aVideoArray });
       }
@@ -574,26 +576,26 @@ class MixtapePlayer extends React.Component {
       if (
         playlist._id === Number(event.currentTarget.id) &&
         playlist.aSideLinks !== undefined
-        ) {
-          const aVideoArray = [];
-          const bVideoArray = [];
-          const aTitleArray = [];
-          const bTitleArray = [];
-          const aLyricArray = [];
-          const bLyricArray = [];
-          const aGenArtArray = [];
-          const bGenArtArray = [];
-          const aLyricLinks = [];
-          const bLyricLinks = [];
-          const aSideLinks = JSON.parse(playlist.aSideLinks);
-          const bSideLinks = JSON.parse(playlist.bSideLinks);
-          aSideLinks.forEach((video) => {
-            aVideoArray.push(video.id.videoId);
-            aTitleArray.push(video.snippet.title);
-            aLyricArray.push(video.genLyrics);
-            aGenArtArray.push(video.genArt);
-            aLyricLinks.push(video.genUrl);
-          });
+      ) {
+        const aVideoArray = [];
+        const bVideoArray = [];
+        const aTitleArray = [];
+        const bTitleArray = [];
+        const aLyricArray = [];
+        const bLyricArray = [];
+        const aGenArtArray = [];
+        const bGenArtArray = [];
+        const aLyricLinks = [];
+        const bLyricLinks = [];
+        const aSideLinks = JSON.parse(playlist.aSideLinks);
+        const bSideLinks = JSON.parse(playlist.bSideLinks);
+        aSideLinks.forEach((video) => {
+          aVideoArray.push(video.id.videoId);
+          aTitleArray.push(video.snippet.title);
+          aLyricArray.push(video.genLyrics);
+          aGenArtArray.push(video.genArt);
+          aLyricLinks.push(video.genUrl);
+        });
         bSideLinks.forEach((video) => {
           bVideoArray.push(video.id.videoId);
           bTitleArray.push(video.snippet.title);
@@ -615,13 +617,18 @@ class MixtapePlayer extends React.Component {
           tapeCover: playlist.tapeDeck,
           sidePlaying: aVideoArray,
           tapeTitle: playlist.tapeLabel,
-          explicitContent: playlist.explicitContent
+          explicitContent: playlist.explicitContent,
         });
         this.state.player.loadPlaylist({ playlist: aVideoArray });
       }
     });
-  };
+  }
 
+  handleToggleClick() {
+    this.setState((state) => ({
+      showSample: !state.showSample,
+    }));
+  }
 
   /**
    * Function triggered by the share mixtape button that determines whether or not the
@@ -657,47 +664,51 @@ class MixtapePlayer extends React.Component {
       bSideLyricLinkArray,
     } = this.state;
 
-
     return (
       <div>
-        <h4 className="player-tape-label">{tapeTitle}</h4>
+        <h4 className='player-tape-label'>{tapeTitle}</h4>
         <TapeCoverImage tapeCover={tapeCover} />
 
         <YouTube
-          className="YouTube-vid"
+          className='YouTube-vid'
           onReady={this.onReady}
           onStateChange={this.checkVid}
         />
         <div
-          className="row col-9 col-md-6 d-flex align-items-center player-ui mx-auto"
+          className='row col-9 col-md-6 d-flex align-items-center player-ui mx-auto'
           style={this.divStyle}
         >
-          { explicitContent ?
-          <img className='advisory' src={advisory} alt='parental guidance suggested'/> :
-          <img className='advisory' src={bunny} alt='pink bunnnny'/>
-          }
-          <div className="row col-12 col-md-12">
+          {explicitContent ? (
+            <img
+              className='advisory'
+              src={advisory}
+              alt='parental guidance suggested'
+            />
+          ) : (
+            <img className='advisory' src={bunny} alt='pink bunnnny' />
+          )}
+          <div className='row col-12 col-md-12'>
             <FontAwesomeIcon
-              className="col-3 ui-button"
+              className='col-3 ui-button'
               style={this.iconStyle}
               icon={faBackward}
               onMouseDown={this.onBackward}
               onMouseUp={this.onStopBackward}
             />
             <FontAwesomeIcon
-              className="col-3 ui-button"
+              className='col-3 ui-button'
               style={this.iconStyle}
               icon={faPause}
               onClick={this.onPauseVideo}
             />
             <FontAwesomeIcon
-              className="col-3 ui-button"
+              className='col-3 ui-button'
               style={this.iconStyle}
               icon={faPlay}
               onClick={this.onPlayVideo}
             />
             <FontAwesomeIcon
-              className="col-3 ui-button"
+              className='col-3 ui-button'
               style={this.iconStyle}
               icon={faForward}
               onMouseDown={this.onForward}
@@ -705,7 +716,17 @@ class MixtapePlayer extends React.Component {
             />
           </div>
         </div>
-
+        <br />
+        {/* <div style={{ textAlign: 'center' }} className='suggestedMixtapes'>
+          <button
+            style={{ textalign: 'center' }}
+            type='button'
+            onClick={this.handleToggleClick}
+            className='btn btn-outline-info mx-auto'
+          >
+            {this.state.showSample ? 'Mixtape Club' : 'Suggested'}
+          </button>
+        </div> */}
         <PlayerSongList
           isAuth={isAuth}
           onFlip={this.onFlip}
@@ -724,19 +745,43 @@ class MixtapePlayer extends React.Component {
           bSideLyricLinkArray={bSideLyricLinkArray}
           onToggleLink={this.onToggleShareLink}
         />
+        {/* <div style={{ textAlign: 'center' }} className='suggestedMixtapes'>
+          <button
+            style={{ textalign: 'center' }}
+            type='button'
+            onClick={this.handleToggleClick}
+            className='btn btn-outline-info mx-auto'
+          >
+            {this.state.showSample ? 'Mixtape Club' : 'Suggested'}
+          </button>
+        </div> */}
+        <div>
+        <SampleMixtape
+          sample={this.state.showSample}
+          userName={userName}
+          suggestedPlaylists={suggestedPlaylists}
+          suggestedRefresh={this.suggestedRefresh}
+        />
+        </div>
+        <br />
+        <br />
         <UserMixtapesList
           userPlaylists={userPlaylists}
           userName={userName}
           tapeRefresh={this.tapeRefresh}
         />
-        <br />
-        <SampleMixtape
-          userName={userName}
-          suggestedPlaylists={suggestedPlaylists}
-          suggestedRefresh={this.suggestedRefresh}
-        />
+        <br/>
+        <div style={{ textAlign: 'center' }} className='suggestedMixtapes'>
+          <button
+            style={{ textalign: 'center' }}
+            type='button'
+            onClick={this.handleToggleClick}
+            className='btn btn-outline-info mx-auto'
+          >
+            {this.state.showSample ? 'Mixtape Club' : 'Suggested'}
+          </button>
+        </div>
       </div>
-
     );
   }
 }
