@@ -99,6 +99,7 @@ function Container(props) {
               onDeckSideB={onDeckSideB}
               queryParam={queryParam}
               googleId={googleId}
+              isAuth={isAuthenticated}
             />
           )}
         />
