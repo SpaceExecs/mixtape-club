@@ -90,7 +90,7 @@ const PlaylistBuilderList = (props) => {
             >
               <ul className="list-group list-group-flush builder-tracks">
                 <li className="list-group-item track-li">
-                  {sideA[0] ? sideA[0].snippet.title : "Track 1 A"}{" "}
+                  {sideA[0] ? sideA[0].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 1 A"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -99,7 +99,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideA[1] ? sideA[1].snippet.title : "Track 2 A"}{" "}
+                  {sideA[1] ? sideA[1].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 2 A"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -108,7 +108,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideA[2] ? sideA[2].snippet.title : "Track 3 A"}{" "}
+                  {sideA[2] ? sideA[2].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 3 A"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -117,7 +117,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideA[3] ? sideA[3].snippet.title : "Track 4 A"}{" "}
+                  {sideA[3] ? sideA[3].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 4 A"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -126,7 +126,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideA[4] ? sideA[4].snippet.title : "Track 5 A"}{" "}
+                  {sideA[4] ? sideA[4].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 5 A"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -144,7 +144,7 @@ const PlaylistBuilderList = (props) => {
               >
               <ul className="list-group list-group-flush builder-tracks">
                 <li className="list-group-item track-li">
-                  {sideB[0] ? sideB[0].snippet.title : "Track 1 B"}{" "}
+                  {sideB[0] ? sideB[0].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 1 B"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -153,7 +153,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideB[1] ? sideB[1].snippet.title : "Track 2 B"}{" "}
+                  {sideB[1] ? sideB[1].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 2 B"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -162,7 +162,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideB[2] ? sideB[2].snippet.title : "Track 3 B"}{" "}
+                  {sideB[2] ? sideB[2].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 3 B"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -171,7 +171,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideB[3] ? sideB[3].snippet.title : "Track 4 B"}{" "}
+                  {sideB[3] ? sideB[3].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 4 B"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
@@ -180,7 +180,7 @@ const PlaylistBuilderList = (props) => {
                   />
                 </li>
                 <li className="list-group-item track-li">
-                  {sideB[4] ? sideB[4].snippet.title : "Track 5 B"}{" "}
+                  {sideB[4] ? sideB[4].snippet.title.replace(/&#39;/g, "'").replace(/&quot;/g, '"') : "Track 5 B"}{" "}
                   <FontAwesomeIcon
                     icon={faMinusCircle}
                     style={{ float: "right", color: "#17a2b8" }}
