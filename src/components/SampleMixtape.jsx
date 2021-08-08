@@ -14,9 +14,7 @@ const SampleMixtape = (props) => {
       <li className='list-group-item active  border border-info bg-info'>
         Suggested Mixtape:
       </li>
-      {suggestedPlaylists.map((playlist, i) => 
-      //  console.log( 'PLAYLIST' ,playlist);
-        (
+      {suggestedPlaylists.map((playlist, i) => (
         <li
           className='list-group-item'
           key={i}
@@ -30,8 +28,7 @@ const SampleMixtape = (props) => {
             Something just for you from Mixtape Club
           </Link>
         </li>
-      )
-      )
+      ))
     }
     </ul>
   );

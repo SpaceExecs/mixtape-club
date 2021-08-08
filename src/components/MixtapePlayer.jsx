@@ -106,7 +106,6 @@ class MixtapePlayer extends React.Component {
       })
       .then((response) => {
         const { data } = response;
-        console.log('LINE 107', response);
         const aVideoArray = [];
         const bVideoArray = [];
         const aTitleArray = [];
@@ -165,10 +164,11 @@ class MixtapePlayer extends React.Component {
 
 
   getSuggestedMixtapes() {
-    const { selectedResult } = this.state;
-    console.log('GET SUGGESTED MIXTAPES CALLED');
-    return axios
-      .get("/suggestedPlaylists")
+    const { googleId } = this.state;
+    axios
+      .get("/suggestedPlaylists", {
+        googleId,
+      })
       .then((response) => {
         const { data } = response;
         console.log('data line 174', data);
@@ -180,16 +180,28 @@ class MixtapePlayer extends React.Component {
         const bVideoArray = [];
         const aTitleArray = [];
         const bTitleArray = [];
-        const aSide = JSON.parse(data.response[0].aSideLinks);
-        const bSide = JSON.parse(data.response[0].bSideLinks);
+        const aLyricArray = [];
+        const bLyricArray = [];
+        const aGenArtArray = [];
+        const bGenArtArray = [];
+        const aLyricLinks = [];
+        const bLyricLinks = [];
+        const aSide = JSON.parse(data.response.aSideLinks);
+        const bSide = JSON.parse(data.response.bSideLinks);
         if (!this.state.currentPlaylistId) {
           aSide.forEach((video) => {
             aVideoArray.push(video.id.videoId);
             aTitleArray.push(video.snippet.title);
+            aLyricArray.push(video.genLyrics);
+            aGenArtArray.push(video.genArt);
+            aLyricLinks.push(video.genUrl);
           });
           bSide.forEach((video) => {
             bVideoArray.push(video.id.videoId);
             bTitleArray.push(video.snippet.title);
+            bLyricArray.push(video.genLyrics);
+            bGenArtArray.push(video.genArt);
+            bLyricLinks.push(video.genUrl);
           });
           this.setState({
             currentPlaylistId: data.response[0]._id,
@@ -197,9 +209,16 @@ class MixtapePlayer extends React.Component {
             bSideLinks: bVideoArray,
             aSideTitles: aTitleArray,
             bSideTitles: bTitleArray,
+            aSideLyricArray: aLyricArray,
+            aSideGenArtArray: aGenArtArray,
+            aSideLyricLinkArray: aLyricLinks,
+            bSideLyricArray: bLyricArray,
+            bSideGenArtArray: bGenArtArray,
+            bSideLyricLinkArray: bLyricLinks,
             tapeCover: data.response[0].tapeDeck,
             sidePlaying: aVideoArray,
             tapeTitle: data.response[0].tapeLabel,
+            explicitContent: data.response[0].explicitContent,
           });
           this.state.player.loadPlaylist({ playlist: this.state.sidePlaying });
         }
@@ -299,64 +318,80 @@ class MixtapePlayer extends React.Component {
     // this.getSuggestedMixtapes();
   }
 
-  // loadSuggested() {
-  //   const aVideoArray = [];
-  //   const bVideoArray = [];
-  //   const aTitleArray = [];
-  //   const bTitleArray = [];
-  //   if (this.state.playListId) {
-  //     const { search } = this.state.playListId;
+  loadSuggested() {
+    const aVideoArray = [];
+    const bVideoArray = [];
+    const aTitleArray = [];
+    const bTitleArray = [];
+    const aLyricArray = [];
+    const bLyricArray = [];
+    const aGenArtArray = [];
+    const bGenArtArray = [];
+    const aLyricLinks = [];
+    const bLyricLinks = [];
+    if (this.state.playListId) {
+      const { search } = this.state.playListId;
 
-  //     this.setState({
-  //       currentPlaylistId: search,
-  //     });
+      this.setState({
+        currentPlaylistId: search,
+      });
 
-  //     const id = search.slice(4);
-  //     axios
-  //       .post("/suggestedPlaylists", {
-  //         id,
-  //       })
-  //       .then((response) => {
-  //         if (response.data.bSide) {
-  //           const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
-  //           aSide.forEach((video) => {
-  //             aVideoArray.push(video.id.videoId);
-  //             aTitleArray.push(video.snippet.title);
-  //           });
-  //           bSide.forEach((video) => {
-  //             bVideoArray.push(video.id.videoId);
-  //             bTitleArray.push(video.snippet.title);
-  //           });
-  //           this.setState({
-  //             aSideLinks: aVideoArray,
-  //             bSideLinks: bVideoArray,
-  //             aSideTitles: aTitleArray,
-  //             bSideTitles: bTitleArray,
-  //             tapeCover: tapeDeck,
-  //             sidePlaying: aVideoArray,
-  //             tapeTitle: tapeLabel,
-  //           });
-  //         } else {
-  //           const { aSide, tapeDeck, tapeLabel, userId } = response.data;
-  //           aSide.forEach((video) => {
-  //             aVideoArray.push(video.id.videoId);
-  //             aTitleArray.push(video.snippet.title);
-  //           });
-  //           this.setState({
-  //             aSideLinks: aVideoArray,
-  //             aSideTitles: aTitleArray,
-  //             tapeCover: tapeDeck,
-  //             sidePlaying: aVideoArray,
-  //             tapeTitle: tapeLabel,
-  //           });
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         // handle error
-  //         console.log(error);
-  //       });
-  //   }
-  // }
+      const id = search.slice(4);
+      axios
+        .post("/suggestedPlaylists", {
+          id,
+        })
+        .then((response) => {
+          if (response.data.bSide) {
+            const { aSide, bSide, tapeDeck, tapeLabel, userId } = response.data;
+            aSide.forEach((video) => {
+              aVideoArray.push(video.id.videoId);
+              aTitleArray.push(video.snippet.title);
+              aLyricArray.push(video.genLyrics);
+              aGenArtArray.push(video.genArt);
+              aLyricLinks.push(video.genUrl);
+            });
+            bSide.forEach((video) => {
+              bVideoArray.push(video.id.videoId);
+              bTitleArray.push(video.snippet.title);
+              bLyricArray.push(video.genLyrics);
+              bGenArtArray.push(video.genArt);
+              bLyricLinks.push(video.genUrl);
+            });
+            this.setState({
+              aSideLinks: aVideoArray,
+              bSideLinks: bVideoArray,
+              aSideTitles: aTitleArray,
+              bSideTitles: bTitleArray,
+              tapeCover: tapeDeck,
+              sidePlaying: aVideoArray,
+              tapeTitle: tapeLabel,
+            });
+          } else {
+            const { aSide, tapeDeck, tapeLabel, userId } = response.data;
+            aSide.forEach((video) => {
+              aVideoArray.push(video.id.videoId);
+              aTitleArray.push(video.snippet.title);
+            });
+            this.setState({
+              aSideLinks: aVideoArray,
+              aSideTitles: aTitleArray,
+              tapeCover: tapeDeck,
+              sidePlaying: aVideoArray,
+              tapeTitle: tapeLabel,
+              aSideLyricArray: aLyricArray,
+              aSideGenArtArray: aGenArtArray,
+              aSideLyricLinkArray: aLyricLinks,
+              explicitContent: response.data[0].explicitContent
+            });
+          }
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    }
+  }
 
   /**
    * Function listens for the youTube player to be fully loaded, then loads
@@ -535,7 +570,6 @@ class MixtapePlayer extends React.Component {
 
   suggestedRefresh(event) {
     // location.reload()
-    // console.log('!!!!!!!!!!');
     // currentSong
     // currentPlaylistId
     // this.loadSuggested();
@@ -544,31 +578,48 @@ class MixtapePlayer extends React.Component {
         playlist._id === Number(event.currentTarget.id) &&
         playlist.aSideLinks !== undefined
         ) {
-          console.log("aVideoArray", aVideoArray);
           const aVideoArray = [];
           const bVideoArray = [];
           const aTitleArray = [];
           const bTitleArray = [];
+          const aLyricArray = [];
+          const bLyricArray = [];
+          const aGenArtArray = [];
+          const bGenArtArray = [];
+          const aLyricLinks = [];
+          const bLyricLinks = [];
           const aSideLinks = JSON.parse(playlist.aSideLinks);
           const bSideLinks = JSON.parse(playlist.bSideLinks);
           aSideLinks.forEach((video) => {
             aVideoArray.push(video.id.videoId);
             aTitleArray.push(video.snippet.title);
+            aLyricArray.push(video.genLyrics);
+            aGenArtArray.push(video.genArt);
+            aLyricLinks.push(video.genUrl);
           });
         bSideLinks.forEach((video) => {
           bVideoArray.push(video.id.videoId);
           bTitleArray.push(video.snippet.title);
+          bLyricArray.push(video.genLyrics);
+          bGenArtArray.push(video.genArt);
+          bLyricLinks.push(video.genUrl);
         });
         this.setState({
           aSideLinks: aVideoArray,
           bSideLinks: bVideoArray,
           aSideTitles: aTitleArray,
           bSideTitles: bTitleArray,
+          aSideLyricArray: aLyricArray,
+          aSideGenArtArray: aGenArtArray,
+          aSideLyricLinkArray: aLyricLinks,
+          bSideLyricArray: bLyricArray,
+          bSideGenArtArray: bGenArtArray,
+          bSideLyricLinkArray: bLyricLinks,
           tapeCover: playlist.tapeDeck,
           sidePlaying: aVideoArray,
           tapeTitle: playlist.tapeLabel,
+          explicitContent: playlist.explicitContent
         });
-        console.log('this.state.aVidoeArray', this.state.aSideLinks);
         this.state.player.loadPlaylist({ playlist: aVideoArray });
       }
     });
@@ -614,8 +665,6 @@ class MixtapePlayer extends React.Component {
       bSideGenArtArray,
       bSideLyricLinkArray,
     } = this.state;
-
-    console.log('LINE 612', suggestedPlaylists);
 
 
     return (
