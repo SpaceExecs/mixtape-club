@@ -6,8 +6,11 @@ const SongDetails = ({
   geniusLink }) => {
   const [visible, setVisible] = useState(false);
 
-  const lyricsArray = lyrics.split('\n');
+  let lyricsArray = ['[ instrumental ]'];
 
+  if (typeof lyrics === 'string'){
+  lyricsArray = lyrics.split('\n');
+  }
 
   return (
   <div
