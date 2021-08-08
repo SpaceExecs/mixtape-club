@@ -63,7 +63,7 @@ const PlayerSongList = (props) => {
 
   return (
     <div>
-      { lyrics !== undefined && lyrics.length ?
+      { lyrics || lyrics === null ?
       <SongDetails
         className='songDetails'
         lyrics={lyrics}
